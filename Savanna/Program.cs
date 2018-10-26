@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Autofac;
 using Savanna.Services;
+using Savanna.Flora;
+using System;
 
 namespace Savanna
 {
@@ -7,26 +9,28 @@ namespace Savanna
     {
         private static void Main(string[] args)
         {
-            var dialog = new DialogWithUser(
-                new ConsoleRenderer(),
-                new Validator()
-            );
+            var startup = new StartupManager(); //Fabric  Factory may be
+            startup.RegisterIoCContainers();
+            startup.StartTrackingKeyboard();
+            startup.DrawGameBorders();
 
-            dialog.WriteMessage("Test plain int input");
-            string str = dialog.ValidInt();
+            //var dialogWithUser = startup.DialogContainer.Resolve<DialogWithUser>();
+            //dialogWithUser.GameMenu();
 
-            dialog.WriteMessage("Test Min is 5");
-            string strMin = dialog.ValidMinInt(5);
+            var savannaField = new SavannaFieldManager();
+            savannaField.GenerateEmptyField();
+            savannaField.AddLionToField();
 
-            dialog.WriteMessage("Test Max is 7");
-            string strMax = dialog.ValidMaxInt(7);
+            var game = new GameManager(new ConsoleRenderer(), savannaField.savanna);
+            game.StartGame();
+            game.ShowGame();
+            //game.Render();
+            //game.GameLoop();
 
-            dialog.WriteMessage("Test Range Input");
-            string strRange = dialog.ValidIntInRange(3, 6);
+            while (true)
+            {
 
-            dialog.WriteMessage("End");
-
-            Console.ReadLine();
+            }
         }
     }
 }

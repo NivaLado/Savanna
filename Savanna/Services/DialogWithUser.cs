@@ -17,46 +17,39 @@ namespace Savanna.Services
         public string ValidInt()
         {
             string input = Console.ReadLine();
-
             while (!_validator.IsInteger(input))
             {
                 WriteErrorMessage("Please input valid number");
                 input = Console.ReadLine();
             }
-
             return input;
         }
 
         public string ValidMinInt(int min)
         {
             string input = ValidInt();
-
             while (_validator.LessThanMin(input, min))
             {
                 WriteErrorMessage("Min is " + min);
                 input = ValidInt();
             }
-
             return input;
         }
 
         public string ValidMaxInt(int max)
         {
             string input = ValidInt();
-
             while (_validator.GreaterThanMax(input, max))
             {
                 WriteErrorMessage("Max is " + max);
                 input = ValidInt();
             }
-
             return input;
         }
 
         public string ValidIntInRange(int min, int max)
         {
             string input = ValidInt();
-
             while (_validator.LessThanMin(input, min) || _validator.GreaterThanMax(input, max))
             {
                 WriteErrorMessage(
@@ -66,7 +59,6 @@ namespace Savanna.Services
                 );
                 input = ValidInt();
             }
-
             return input;
         }
 
@@ -78,6 +70,13 @@ namespace Savanna.Services
         public void WriteErrorMessage(string message)
         {
             _renderer.WriteErrorMessage(message);
+        }
+
+        public void GameMenu()
+        {
+            _renderer.WriteCenteredMessage("Savanna", 2, 0);
+            _renderer.WriteCenteredMessage("P) Start Game", 2, 1);
+            _renderer.WriteCenteredMessage("ESC) Exit", 2, 2);
         }
     }
 }
