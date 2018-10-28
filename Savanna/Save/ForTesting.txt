@@ -1,0 +1,8 @@
+﻿            //savannaField.CreateAndAddObstacleToTheField(2, 1);
+            //savannaField.CreateAndAddObstacleToTheField(3, 1);
+            //savannaField.CreateAndAddObstacleToTheField(4, 1);
+            //savannaField.CreateAndAddObstacleToTheField(5, 1);
+            //savannaField.CreateAndAddObstacleToTheField(6, 1);
+            //savannaField.CreateAndAddObstacleToTheField(7, 1);
+            //savannaField.CreateAndAddObstacleToTheField(8, 1);
+            //savannaField.CreateAndAddObstacleToTheField(9, 1);

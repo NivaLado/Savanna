@@ -11,10 +11,12 @@ namespace Savanna.Interfaces
         double g { get; set; }
         double h { get; set; }
 
+        bool IsObstacle { get; set; }
+
         List<ICellBase> neighbors { get; set; }
         ICellBase cameFrom { get; set; }
-        void AddNeighbords(ISavannaField savanna);
 
+        void AddNeighbords(ISavannaField savanna);
 
         void Behave();
     }

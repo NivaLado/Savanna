@@ -1,4 +1,5 @@
 ﻿using Savanna.Abstract;
+using Savanna.Constants;
 using Savanna.Fauna;
 using Savanna.Models;
 using Savanna.Rendering;
@@ -39,13 +40,24 @@ namespace Savanna.Services
             }
         }
 
-        public void AddNeightbors()
+        public void AddNeighbors()
         {
             for (int x = 0; x < savanna.Field.GetLength(0); x++)
             {
                 for (int y = 0; y < savanna.Field.GetLength(1); y++)
                 {
                     savanna.Field[x, y].AddNeighbords(savanna);
+                }
+            }
+        }
+
+        public void ClearNeightbors()
+        {
+            for (int x = 0; x < savanna.Field.GetLength(0); x++)
+            {
+                for (int y = 0; y < savanna.Field.GetLength(1); y++)
+                {
+                    savanna.Field[x, y].neighbors.Clear();
                 }
             }
         }
@@ -59,7 +71,32 @@ namespace Savanna.Services
                 AStarPathfinding.GetInstance());
 
             savanna.Field[x, y] = animal;
+            savanna.Field[x, y].AddNeighbords(savanna);
+        }
 
+        public void CreateAndAddObstacleToTheField(int x, int y)
+        {
+            var obstacle = new Obstacle(x,y);
+
+            savanna.Field[x, y] = obstacle;
+            savanna.Field[x, y].AddNeighbords(savanna);
+        }
+
+        public void CreateAndAddObstacleToTheFieldRandomly()
+        {
+            Random generator = new Random(Guid.NewGuid().GetHashCode());
+
+            for (int x = 0; x < savanna.Field.GetLength(0); x++)
+            {
+                for (int y = 0; y < savanna.Field.GetLength(1); y++)
+                {
+                    if (generator.Next(101) < Globals.ObstacleAppearChance)
+                    {
+                        savanna.Field[x, y] = new Obstacle(x, y);
+                        savanna.Field[x, y].AddNeighbords(savanna);
+                    }
+                }
+            }
         }
     }
 }

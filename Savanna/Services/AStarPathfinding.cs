@@ -1,4 +1,5 @@
-﻿using Savanna.Interfaces;
+﻿using Savanna.Fauna;
+using Savanna.Interfaces;
 using Savanna.Rendering;
 using System;
 using System.Collections.Generic;
@@ -25,21 +26,21 @@ namespace Savanna.Services
 
         List<ICellBase> openSet = new List<ICellBase>();
         List<ICellBase> closedSet = new List<ICellBase>();
+        List<ICellBase> obstacleSet = new List<ICellBase>();
         List<ICellBase> path = new List<ICellBase>();
+        bool finished;
 
         IRenderer _renderer = ConsoleRenderer.GetInstance();
 
         public void MoveFromTo(ICellBase start, ICellBase end)
         {
-            bool finished = false;
+            ClearOldData();
             openSet.Add(start);
 
             while (!finished)
             {
                 if (openSet.Count > 0)
                 {
-                    VisualizePaths();
-
                     var winner = 0;
                     for (int i = 1; i < openSet.Count; i++)
                     {
@@ -50,7 +51,6 @@ namespace Savanna.Services
                     }
 
                     var current = openSet[winner];
-
                     if (current._x == end._x && current._y == end._y)
                     {
                         ICellBase temp = current;
@@ -60,9 +60,8 @@ namespace Savanna.Services
                             path.Add(temp.cameFrom);
                             temp = temp.cameFrom;
                         }
-
-
-                        VisualizePaths();
+                        VisualizePath();
+                        VisualizeObstacles();
                         finished = true;
                         break;
                     }
@@ -74,7 +73,8 @@ namespace Savanna.Services
                     for (int i = 0; i < neighbors.Count; i++)
                     {
                         var neighbor = neighbors[i];
-                        if (!closedSet.Contains(neighbor))
+
+                        if (!closedSet.Contains(neighbor) && !neighbor.IsObstacle)
                         {
                             var tempG = current.g + 1;
                             if (openSet.Contains(neighbor))
@@ -89,48 +89,67 @@ namespace Savanna.Services
                                 neighbor.g = tempG;
                                 openSet.Add(neighbor);
                             }
-
                             neighbor.h = Heuristic(neighbor, end);
                             neighbor.f = neighbor.g + neighbor.h;
                             neighbor.cameFrom = current;
                         }
+                        if(neighbor.IsObstacle)
+                            obstacleSet.Add(neighbor);
                     }
-
-                    VisualizePaths();
                 }
                 else
                 {
                     Console.WriteLine("No Solution!");
                     finished = true;
                 }
+                VisualizeOpenClosed();
             }
         }
-        //A*
-        public void VisualizePaths()
+
+        private void ClearOldData()
+        {
+            finished = false;
+            openSet.Clear();
+            closedSet.Clear();
+            obstacleSet.Clear();
+            path.Clear();
+        }
+
+        private void VisualizeOpenClosed()
         {
             foreach (var open in openSet)
             {
-                _renderer.DrawAtXyWithColor(open._x, open._y, ConsoleColor.Green);
+               _renderer.DrawAtXyWithColor(open._x, open._y, ConsoleColor.Green);
             }
             foreach (var closed in closedSet)
             {
-                _renderer.DrawAtXyWithColor(closed._x, closed._y, ConsoleColor.Red);
+               _renderer.DrawAtXyWithColor(closed._x, closed._y, ConsoleColor.Red);
             }
+        }
+
+        private void VisualizeObstacles()
+        {
+            foreach (var obstacle in obstacleSet)
+            {
+                _renderer.DrawAtXyWithColor(obstacle._x, obstacle._y, ConsoleColor.Yellow);
+            }
+        }
+
+        private void VisualizePath()
+        {
             foreach (var endPath in path)
             {
                 _renderer.DrawAtXyWithColor(endPath._x, endPath._y, ConsoleColor.Magenta);
             }
         }
 
-        //*A
-        public double Heuristic(ICellBase neighbor, ICellBase end)
+        private double Heuristic(ICellBase neighbor, ICellBase end)
         {
+            return Math.Abs(neighbor._x - end._x) + Math.Abs(neighbor._y - end._y); //Manhattan Distance
             //return GetDistance(neighbor.x, neighbor.y, end.x, end.y); //Euclidean distance
-            return Math.Abs(neighbor._x - end._x) + Math.Abs(neighbor._y - end._y);
         }
 
-        //A*
-        public double GetDistance(double x1, double y1, double x2, double y2)
+        private double GetDistance(double x1, double y1, double x2, double y2)
         {
             return Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
         }

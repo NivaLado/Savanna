@@ -39,12 +39,6 @@ namespace Savanna.Abstract
             OnAnimalMoved(data);
         }
 
-        public void DefinePosition(ICellBase position)
-        {
-            data.Position = position;
-            var t = _x; 
-        }
-
         protected virtual void OnAnimalBorned(IAnimalData data)
         {
             AnimalBorned?.Invoke(this, new AnimalEventArgs() { AnimalData = data });

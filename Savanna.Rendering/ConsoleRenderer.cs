@@ -8,7 +8,6 @@ namespace Savanna.Rendering
 {
     public class ConsoleRenderer : IRenderer
     {
-
         #region Singleton
         private static readonly Lazy<ConsoleRenderer> lazy =
                             new Lazy<ConsoleRenderer>(() => new ConsoleRenderer());
@@ -66,7 +65,7 @@ namespace Savanna.Rendering
                 Console.SetCursorPosition(xOffset, Console.CursorTop);
                 for (int x = 0; x < width; x++)
                 {
-                    AnimalVisualization(grid, x, y);
+                    SavannaVisualization(grid, x, y);
 
                     if (x == width - 1)
                     {
@@ -137,7 +136,7 @@ namespace Savanna.Rendering
             int steps = 0; int counter = 0;
 
             Console.SetCursorPosition(x + 1, y + 1);
-            AnimalVisualization(savanna.Field, x, y, shiftX, shiftY);
+            SavannaVisualization(savanna.Field, x, y, shiftX, shiftY);
 
             for (int u = 0; u < iterations; u++)
             {
@@ -149,7 +148,7 @@ namespace Savanna.Rendering
                 {
                     Conditions(u, ref shiftX, ref shiftY);
                     Console.SetCursorPosition(x + shiftX + 1, y + shiftY + 1);
-                    AnimalVisualization(savanna.Field, x, y, shiftX, shiftY);
+                    SavannaVisualization(savanna.Field, x, y, shiftX, shiftY);
                     Thread.Sleep(1);
                 }
                 counter++;
@@ -168,13 +167,17 @@ namespace Savanna.Rendering
             Console.Write("*");
         }
 
-        private void AnimalVisualization(ICellBase[,] field, int x, int y, int shiftX = 0, int shiftY = 0)
+        private void SavannaVisualization(ICellBase[,] field, int x, int y, int shiftX = 0, int shiftY = 0)
         {
-            if (field[y + shiftY, x + shiftX] is Ground)
+            if (field[x + shiftX, y + shiftY] is Obstacle)
+            {
+                Console.Write("x");
+            }
+            else if (field[x + shiftX, y + shiftY] is Ground)
             {
                 Console.Write(" ");
             }
-            else if (field[y + shiftY, x + shiftX] is IAnimal)
+            else if (field[x + shiftX, y + shiftY] is IAnimal)
             {
                 Console.Write("L");
             }

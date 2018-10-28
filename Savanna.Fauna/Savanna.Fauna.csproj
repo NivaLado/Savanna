@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="GrassEater.cs" />
     <Compile Include="Ground.cs" />
+    <Compile Include="Obstacle.cs" />
     <Compile Include="Predator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
