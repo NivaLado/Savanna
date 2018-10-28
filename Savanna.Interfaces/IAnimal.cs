@@ -1,4 +1,4 @@
-﻿namespace Savanna.Fauna.Interfaces
+﻿namespace Savanna.Interfaces
 {
     public interface IAnimal
     {

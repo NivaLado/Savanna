@@ -1,7 +1,8 @@
-﻿using Autofac;
-using Savanna.Services;
-using Savanna.Flora;
+﻿//using Autofac;
 using System;
+using Savanna.Services;
+using Savanna.Rendering;
+using Autofac;
 
 namespace Savanna
 {
@@ -9,7 +10,7 @@ namespace Savanna
     {
         private static void Main(string[] args)
         {
-            var startup = new StartupManager(); //Fabric  Factory may be
+            var startup = new StartupManager(); //Fabric Factory may be
             startup.RegisterIoCContainers();
             startup.StartTrackingKeyboard();
             startup.DrawGameBorders();
@@ -19,13 +20,14 @@ namespace Savanna
 
             var savannaField = new SavannaFieldManager();
             savannaField.GenerateEmptyField();
+            savannaField.AddNeightbors();
             savannaField.AddLionToField();
 
-            var game = new GameManager(new ConsoleRenderer(), savannaField.savanna);
-            game.StartGame();
-            game.ShowGame();
-            //game.Render();
-            //game.GameLoop();
+            var game = new GameManager(ConsoleRenderer.GetInstance(), savannaField.savanna);
+            //game.StartGame();
+            //game.ShowGame();
+            game.Render();
+            game.GameLoop();
 
             while (true)
             {

@@ -1,13 +1,13 @@
-﻿using Savanna.Fauna.Interfaces;
-using Savanna.Flora.Models;
+﻿using Savanna.Abstract;
 using Savanna.Interfaces;
+using Savanna.Models;
 
 namespace Savanna.Services
 {
     public class GameManager
     {
         private IRenderer _renderer;
-        private SavannaField _savanna;
+        private ISavannaField _savanna;
 
         public GameManager(IRenderer renderer, SavannaField savanna)
         {
@@ -34,8 +34,8 @@ namespace Savanna.Services
             {
                 for (int y = 0; y < _savanna.Field.GetLength(1); y++)
                 {
-                    if(_savanna.Field[x, y] is IAnimal)
-                        _savanna.Field[x, y].Move();
+                    if(_savanna.Field[x, y] is AnimalBase)
+                        _savanna.Field[x, y].Behave();
                 }
             }
         }

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Autofac;
-using GameOfLife.Services;
 using Savanna.Constants;
+using Savanna.Interfaces;
+using Savanna.Rendering;
 
 namespace Savanna.Services
 {
@@ -15,8 +12,8 @@ namespace Savanna.Services
 
         public void DrawGameBorders()
         {
-            ConsoleRenderer renderer = new ConsoleRenderer();
-            renderer.DrawGameBorders(new int[Globals.Width,Globals.Height]);
+            IRenderer renderer = ConsoleRenderer.GetInstance();
+            renderer.DrawGameBorders(Globals.Width, Globals.Height);
         }
 
         public void StartTrackingKeyboard()

@@ -1,6 +1,7 @@
 ﻿using Savanna.Fauna;
 using Savanna.Flora.Models;
 using Savanna.Fauna.Interfaces;
+using Savanna.EventHandlers;
 
 namespace Savanna.Flora
 {
@@ -22,7 +23,7 @@ namespace Savanna.Flora
 
         public void AddLionToField()
         {
-            savanna.Field[0, 0] = new Lion();
+            savanna.Field[0, 0] = new Lion(new GameNotifications());
         }
     }
 }

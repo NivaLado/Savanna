@@ -1,5 +1,5 @@
-﻿using System;
-using Savanna.Interfaces;
+﻿using Savanna.Interfaces;
+using System;
 
 namespace Savanna.Services
 {

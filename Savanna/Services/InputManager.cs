@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Savanna.Constants;
 
-namespace GameOfLife.Services
+namespace Savanna.Services
 {
     public class InputManager
     {

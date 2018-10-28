@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Savanna.Interfaces;
+using System;
 
-namespace Savanna.Fauna.Models
+namespace Savanna.Models
 {
     [Serializable]
-    public class Animal
+    public class AnimalData : IAnimalData
     {
         public int ID { get; set; }
         public int Speed { get; set; }
