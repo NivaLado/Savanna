@@ -45,6 +45,7 @@
     <Compile Include="IAnimalData.cs" />
     <Compile Include="ICellBase.cs" />
     <Compile Include="INotificator.cs" />
+    <Compile Include="IPathfinder.cs" />
     <Compile Include="IRenderer.cs" />
     <Compile Include="ISavannaField.cs" />
     <Compile Include="IValidator.cs" />

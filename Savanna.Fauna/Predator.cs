@@ -7,8 +7,8 @@ namespace Savanna.Fauna
     public class Predator : AnimalBase, IAnimal
     {
 
-        public Predator(INotificator notificator, ISavannaField field, IRenderer renderer) 
-            : base(notificator, field, renderer)
+        public Predator(int x, int y, INotificator notificator, ISavannaField field, IPathfinder pathfinder) 
+            : base(x, y, notificator, field, pathfinder)
         {
             data.IsPredator = true;
         }

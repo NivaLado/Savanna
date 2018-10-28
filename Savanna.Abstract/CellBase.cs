@@ -5,8 +5,8 @@ namespace Savanna.Abstract
 {
     public abstract class CellBase : ICellBase
     {
-        public int x { get; set; }
-        public int y { get; set; }
+        public int _x { get; set; }
+        public int _y { get; set; }
 
         public double f { get; set; }
         public double g { get; set; }
@@ -14,28 +14,33 @@ namespace Savanna.Abstract
         public List<ICellBase> neighbors { get; set; }
         public ICellBase cameFrom { get; set; }
 
-        //public List<ICellBase> neighbors;// = new List<ICellBase>();
+        public CellBase(int x, int y)
+        {
+            _x = x;
+            _y = y;
+        }
+
 
         public void AddNeighbords(ISavannaField savanna)
         {
             if(neighbors== null)
                 neighbors = new List<ICellBase>();
 
-            if( x < savanna.Width - 1)
+            if( _x < savanna.Width - 1)
             {
-                neighbors.Add(savanna.Field[x + 1, y]);
+                neighbors.Add(savanna.Field[_x + 1, _y]);
             }
-            if (x > 0)
+            if (_x > 0)
             {
-                neighbors.Add(savanna.Field[x - 1, y]);
+                neighbors.Add(savanna.Field[_x - 1, _y]);
             }
-            if(y < savanna.Height - 1)
+            if(_y < savanna.Height - 1)
             {
-                neighbors.Add(savanna.Field[x, y + 1]);
+                neighbors.Add(savanna.Field[_x, _y + 1]);
             }
-            if( y > 0)
+            if( _y > 0)
             {
-                neighbors.Add(savanna.Field[x, y - 1]);
+                neighbors.Add(savanna.Field[_x, _y - 1]);
             }
         }
 

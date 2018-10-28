@@ -18,12 +18,12 @@ namespace Savanna
             //var dialogWithUser = startup.DialogContainer.Resolve<DialogWithUser>();
             //dialogWithUser.GameMenu();
 
-            var savannaField = new SavannaFieldManager();
+            var savannaField = SavannaFieldManager.GetInstance();
             savannaField.GenerateEmptyField();
+            savannaField.CreateAndAddAnimalToTheField(21,21);
             savannaField.AddNeightbors();
-            savannaField.AddLionToField();
 
-            var game = new GameManager(ConsoleRenderer.GetInstance(), savannaField.savanna);
+            var game = new GameManager(ConsoleRenderer.GetInstance(), SavannaFieldManager.savanna);
             //game.StartGame();
             //game.ShowGame();
             game.Render();

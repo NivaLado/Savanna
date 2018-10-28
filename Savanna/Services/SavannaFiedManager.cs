@@ -2,12 +2,30 @@
 using Savanna.Fauna;
 using Savanna.Models;
 using Savanna.Rendering;
+using System;
 
 namespace Savanna.Services
 {
     public class SavannaFieldManager
     {
-        public SavannaField savanna = new SavannaField();
+
+        #region Singleton
+        private static readonly Lazy<SavannaFieldManager> lazy =
+                            new Lazy<SavannaFieldManager>(() => new SavannaFieldManager());
+        public string Name { get; private set; }
+
+        private SavannaFieldManager()
+        {
+            Name = Guid.NewGuid().ToString();
+        }
+
+        public static SavannaFieldManager GetInstance()
+        {
+            return lazy.Value;
+        }
+        #endregion
+
+        public static SavannaField savanna = new SavannaField();
 
         public void GenerateEmptyField()
         {
@@ -16,10 +34,7 @@ namespace Savanna.Services
             {
                 for (int y = 0; y < savanna.Field.GetLength(1); y++)
                 {
-                    savanna.Field[x,y] = new Ground();
-
-                    savanna.Field[x, y].x = x;
-                    savanna.Field[x, y].y = y;
+                    savanna.Field[x, y] = new Ground(x, y);
                 }
             }
         }
@@ -35,9 +50,16 @@ namespace Savanna.Services
             }
         }
 
-        public void AddLionToField()
+        public void CreateAndAddAnimalToTheField(int x, int y)
         {
-            savanna.Field[21, 21] = new Predator(new GameNotifications(), savanna, ConsoleRenderer.GetInstance());
+            var animal = new Predator(
+                x,y,
+                new GameNotifications(),
+                savanna,
+                AStarPathfinding.GetInstance());
+
+            savanna.Field[x, y] = animal;
+
         }
     }
 }

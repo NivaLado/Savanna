@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="AnimalBase.cs" />
     <Compile Include="CellBase.cs" />
-    <Compile Include="EnvironmentBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

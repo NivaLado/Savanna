@@ -4,7 +4,7 @@
     {
         int ID { get; set; }
         int Speed { get; set; }
-        int[,] Position { get; set; }
+        ICellBase Position { get; set; }
         bool IsPredator { get; set; }
     }
 }
