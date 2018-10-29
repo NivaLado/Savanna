@@ -12,6 +12,7 @@ namespace Savanna.Interfaces
         double h { get; set; }
 
         bool IsObstacle { get; set; }
+        bool CanAction { get; set; }
 
         List<ICellBase> neighbors { get; set; }
         ICellBase cameFrom { get; set; }

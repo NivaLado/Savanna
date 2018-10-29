@@ -12,6 +12,7 @@ namespace Savanna.Abstract
         public double g { get; set; }
         public double h { get; set; }
         public bool IsObstacle { get; set; }
+        public bool CanAction { get; set; }
         public List<ICellBase> neighbors { get; set; }
         public ICellBase cameFrom { get; set; }
 

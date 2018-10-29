@@ -2,6 +2,7 @@
 using Savanna.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Savanna.Services
 {
@@ -41,7 +42,7 @@ namespace Savanna.Services
                 if (openSet.Count > 0)
                 {
                     var winner = 0;
-                    for (int i = 1; i < openSet.Count; i++)
+                    for (int i = 0; i < openSet.Count; i++)
                     {
                         if (openSet[i].f < openSet[winner].f)
                         {
@@ -60,7 +61,7 @@ namespace Savanna.Services
                             temp = temp.cameFrom;
                         }
                         VisualizePath();
-                        VisualizeObstacles();
+                        //VisualizeObstacles();
                         finished = true;
                         break;
                     }
@@ -101,12 +102,16 @@ namespace Savanna.Services
                     Console.WriteLine("No Solution!");
                     finished = true;
                 }
-                VisualizeOpenClosed();
+                //VisualizeOpenClosed();
             }
         }
 
         private void ClearOldData()
         {
+            var savannaManager = SavannaFieldManager.GetInstance();
+            savannaManager.ClearNeightbors();
+            savannaManager.AddNeighbors();
+
             finished = false;
             openSet.Clear();
             closedSet.Clear();
@@ -140,6 +145,7 @@ namespace Savanna.Services
             {
                 _renderer.DrawAtXyWithColor(endPath._x, endPath._y, ConsoleColor.Magenta);
             }
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private double Heuristic(ICellBase neighbor, ICellBase end)

@@ -25,9 +25,13 @@ namespace Savanna
                 );
 
             game.MainMenu();
-            Thread.Sleep(Globals.InputDelay);
-            game.GameLoop();
-            //game.GameLoop();
+            
+            while(true)
+            {
+                game.GameLoop();
+            }
+
+
 
             while (true)
             {

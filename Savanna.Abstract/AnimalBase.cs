@@ -34,34 +34,86 @@ namespace Savanna.Abstract
 
         public void Move()
         {
-            //Idle();
-            Test();
-            OnAnimalMoved(data);
+            if(CanAction)
+            {
+                CanAction = false;
+                Idle();
+                OnAnimalMoved(data);
+            }
         }
 
         public void Idle()
         {
-            for (int i = 0; i < neighbors.Count; i++)
+            Random random = new Random(Guid.NewGuid().GetHashCode());
+            int number = random.Next(0, 4);
+            switch (number)
             {
-                if(!neighbors[i].IsObstacle)
-                {
-                    _savanna.Field[_x, _y] = _savanna.Field[neighbors[i]._x, neighbors[i]._y];
-
-                    _x = neighbors[i]._x;
-                    _y = neighbors[i]._y;
-
+                case 0:
+                    MoveRight();
                     break;
-                }
+                case 1:
+                    MoveLeft();
+                    break;
+                case 2:
+                    MoveTop();
+                    break;
+                case 3:
+                    MoveDown();
+                    break;
             }
         }
 
-        public void Test()
+        public void Swap(int x, int y)
         {
-            var temp = _savanna.Field[_x - 5, _y];
+            var newLocation = _savanna.Field[_x + x, _y + y];
 
-            _savanna.Field[_x - 5, _y] = this;
-            _savanna.Field[_x, _y] = temp;
+            if(!newLocation.IsObstacle)
+            {
+                _savanna.Field[_x + x, _y + y] = this;
+                _savanna.Field[_x, _y] = newLocation;
+
+                int tempX = _x; int tempY = _y;
+
+                _x = newLocation._x;
+                _y = newLocation._y;
+
+                newLocation._x = tempX;
+                newLocation._y = tempY;
+            }
         }
+
+        public void MoveRight()
+        {
+            if (_x < _savanna.Width - 1)
+            {
+                Swap(1, 0);
+            }
+        }
+
+        public void MoveLeft()
+        {
+            if (_x > 0)
+            {
+                Swap(-1, 0);
+            }
+        }
+
+        public void MoveTop()
+        {
+            if (_y < _savanna.Height - 1)
+            {
+                Swap(0, 1);
+            }
+        }
+
+        public void MoveDown()
+        {
+            if (_y > 0)
+            {
+                Swap(0, -1);
+            }
+        }
+
 
         protected virtual void OnAnimalBorned(IAnimalData data)
         {

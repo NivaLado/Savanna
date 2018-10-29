@@ -17,8 +17,8 @@ namespace Savanna.Fauna
 
         public override void Behave()
         {
-            MoveFromTo();
             Move();
+            MoveFromTo();
         }
 
         private void MoveFromTo()
@@ -30,7 +30,10 @@ namespace Savanna.Fauna
                 for (int y = 0; y < height; y++)
                 {
                     if(_savanna.Field[x, y] is GrassEater)
+                    {
                         _pathfinder.MoveFromTo(_savanna.Field[_x, _y], _savanna.Field[x, y]);
+                        break;
+                    }
                 }
             }
         }
