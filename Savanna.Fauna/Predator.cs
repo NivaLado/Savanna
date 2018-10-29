@@ -8,8 +8,9 @@ namespace Savanna.Fauna
         public Predator(int x, int y, 
             INotificator notificator, 
             ISavannaField field, 
-            IPathfinder pathfinder) 
-            : base(x, y, notificator, field, pathfinder)
+            IPathfinder pathfinder,
+            IRenderer renderer) 
+            : base(x, y, notificator, field, pathfinder, renderer)
         {
             data.IsPredator = true;
             data.Speed = 1;
@@ -17,8 +18,11 @@ namespace Savanna.Fauna
 
         public override void Behave()
         {
-            Move();
-            MoveFromTo();
+            if(CanAction)
+            {
+                Move();
+                MoveFromTo();
+            }
         }
 
         private void MoveFromTo()
@@ -32,8 +36,8 @@ namespace Savanna.Fauna
                     if(_savanna.Field[x, y] is GrassEater)
                     {
                         _pathfinder.MoveFromTo(_savanna.Field[_x, _y], _savanna.Field[x, y]);
-                        break;
                     }
+                    break;
                 }
             }
         }

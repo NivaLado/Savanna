@@ -57,9 +57,12 @@ namespace Savanna.Services
             //Add Obstacles Before Creating Animals
             _savannaManager.CreateAndAddObstacleToTheFieldRandomly();
             //Add Animals
-            _savannaManager.CreateAndAddAnimalToTheField(3, 3, true);
+            _savannaManager.CreateAndAddAnimalToTheField(21, 21, true);
 
-            _savannaManager.CreateAndAddAnimalToTheField(0, 0, false);
+            _savannaManager.CreateAndAddAnimalToTheField(5, 10, false);
+            _savannaManager.CreateAndAddAnimalToTheField(7, 10, false);
+            _savannaManager.CreateAndAddAnimalToTheField(9, 10, false);
+            _savannaManager.CreateAndAddAnimalToTheField(11, 10, false);
             //_savannaManager.CreateAndAddAnimalToTheField(15, 5, false);
             //Initialize All Neigtbors
             _savannaManager.AddNeighbors();
@@ -71,7 +74,6 @@ namespace Savanna.Services
             ResetAction();
             int width = _savanna.Field.GetLength(0);
             int height = _savanna.Field.GetLength(1);
-            Render();
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
@@ -82,7 +84,6 @@ namespace Savanna.Services
                     }
                 }
             }
-            Render();
 
             for (int x = 0; x < width; x++)
             {
@@ -94,9 +95,7 @@ namespace Savanna.Services
                     }
                 }
             }
-            Thread.Sleep(1500);
-            Render();
-            Thread.Sleep(1500);
+            Thread.Sleep(500);
         }
 
         public void Render()

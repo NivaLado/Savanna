@@ -24,7 +24,6 @@ namespace Savanna.Services
         }
         #endregion
 
-        private bool finished;
         private List<ICellBase> openSet = new List<ICellBase>();
         private List<ICellBase> closedSet = new List<ICellBase>();
         private List<ICellBase> obstacleSet = new List<ICellBase>();
@@ -36,13 +35,14 @@ namespace Savanna.Services
         {
             ClearOldData();
             openSet.Add(start);
-
-            while (!finished)
+            
+            while (true)
             {
+                int test = 0;
                 if (openSet.Count > 0)
                 {
                     var winner = 0;
-                    for (int i = 0; i < openSet.Count; i++)
+                    for (int i = 1; i < openSet.Count; i++)
                     {
                         if (openSet[i].f < openSet[winner].f)
                         {
@@ -62,7 +62,6 @@ namespace Savanna.Services
                         }
                         VisualizePath();
                         //VisualizeObstacles();
-                        finished = true;
                         break;
                     }
 
@@ -100,23 +99,23 @@ namespace Savanna.Services
                 else
                 {
                     Console.WriteLine("No Solution!");
-                    finished = true;
+                    break;
                 }
-                //VisualizeOpenClosed();
+                VisualizeOpenClosed();
             }
         }
 
         private void ClearOldData()
         {
             var savannaManager = SavannaFieldManager.GetInstance();
+            savannaManager.ClearCameFrom();
             savannaManager.ClearNeightbors();
             savannaManager.AddNeighbors();
 
-            finished = false;
+            path.Clear();
             openSet.Clear();
             closedSet.Clear();
             obstacleSet.Clear();
-            path.Clear();
         }
 
         private void VisualizeOpenClosed()

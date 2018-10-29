@@ -13,10 +13,11 @@ namespace Savanna.Abstract
 
         protected ISavannaField _savanna;
         protected IPathfinder _pathfinder;
+        protected IRenderer _renderer;
         protected IAnimalData data;
         static int id = 0;
 
-        public AnimalBase(int x, int y,INotificator notificator, ISavannaField savanna, IPathfinder pathfinder) 
+        public AnimalBase(int x, int y,INotificator notificator, ISavannaField savanna, IPathfinder pathfinder, IRenderer renderer) 
             : base(x, y)
         {
             id++;
@@ -25,6 +26,7 @@ namespace Savanna.Abstract
             _savanna = savanna;
             _notificator = notificator;
             _pathfinder = pathfinder;
+            _renderer  = renderer;
 
             AnimalMoved += notificator.OnAnimalMoved;
             AnimalBorned += notificator.OnAnimalBorned;
@@ -34,12 +36,10 @@ namespace Savanna.Abstract
 
         public void Move()
         {
-            if(CanAction)
-            {
-                CanAction = false;
-                Idle();
-                OnAnimalMoved(data);
-            }
+            CanAction = false;
+            Idle();
+            _renderer.DrawGame(_savanna, 1 , 1);
+            OnAnimalMoved(data);
         }
 
         public void Idle()
@@ -65,7 +65,7 @@ namespace Savanna.Abstract
 
         public void Swap(int x, int y)
         {
-            var newLocation = _savanna.Field[_x + x, _y + y];
+           var newLocation = _savanna.Field[_x + x, _y + y];
 
             if(!newLocation.IsObstacle)
             {
@@ -73,12 +73,22 @@ namespace Savanna.Abstract
                 _savanna.Field[_x, _y] = newLocation;
 
                 int tempX = _x; int tempY = _y;
+                double tempG = g; double tempH = h;
+                double tempF = f; var tempNeighbors = neighbors; 
 
                 _x = newLocation._x;
                 _y = newLocation._y;
+                g = newLocation.g;
+                h = newLocation.h;
+                f = newLocation.f;
+                //neighbors = newLocation.neighbors;
 
                 newLocation._x = tempX;
                 newLocation._y = tempY;
+                newLocation.g = tempG;
+                newLocation.h = tempH;
+                newLocation.f = tempF;
+                //newLocation.neighbors = tempNeighbors;
             }
         }
 

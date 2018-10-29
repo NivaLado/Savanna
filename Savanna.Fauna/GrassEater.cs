@@ -11,15 +11,19 @@ namespace Savanna.Fauna
             int y, 
             INotificator notificator,
             ISavannaField field, 
-            IPathfinder pathfinder)
-        : base(x, y, notificator, field, pathfinder)
+            IPathfinder pathfinder,
+            IRenderer renderer)
+        : base(x, y, notificator, field, pathfinder, renderer)
         {
             data.IsPredator = false;
         }
 
         public override void Behave()
         {
-            Move();
+            if (CanAction)
+            {
+                Move();
+            }
         }
     }
 }

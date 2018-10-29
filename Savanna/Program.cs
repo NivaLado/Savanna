@@ -30,13 +30,6 @@ namespace Savanna
             {
                 game.GameLoop();
             }
-
-
-
-            while (true)
-            {
-
-            }
         }
     }
 }

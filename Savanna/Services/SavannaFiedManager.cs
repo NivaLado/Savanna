@@ -63,6 +63,20 @@ namespace Savanna.Services
             }
         }
 
+        public void ClearCameFrom()
+        {
+            for (int x = 0; x < savanna.Field.GetLength(0); x++)
+            {
+                for (int y = 0; y < savanna.Field.GetLength(1); y++)
+                {
+                    savanna.Field[x, y].cameFrom = null;
+                    savanna.Field[x, y].g = 0;
+                    savanna.Field[x, y].h = 0;
+                    savanna.Field[x, y].f = 0;
+                }
+            }
+        }
+
         public void CreateAndAddAnimalToTheField(int x, int y, bool isPredator)
         {
             CellBase animal;
@@ -72,7 +86,9 @@ namespace Savanna.Services
                     x, y,
                     new GameNotifications(),
                     savanna,
-                    AStarPathfinding.GetInstance());
+                    AStarPathfinding.GetInstance(),
+                    ConsoleRenderer.GetInstance()
+                    );
             }
             else
             {
@@ -80,7 +96,9 @@ namespace Savanna.Services
                     x, y,
                     new GameNotifications(),
                     savanna,
-                    AStarPathfinding.GetInstance());
+                    AStarPathfinding.GetInstance(),
+                    ConsoleRenderer.GetInstance()
+                    );
             }
 
             savanna.Field[x, y] = animal;
