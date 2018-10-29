@@ -24,10 +24,7 @@ namespace Savanna
             //Add Obstacles Before Creating Animals
             savannaField.CreateAndAddObstacleToTheFieldRandomly();
             //Add Animals
-            savannaField.CreateAndAddAnimalToTheField(35, 30);
-            savannaField.CreateAndAddAnimalToTheField(21, 21);
-            savannaField.CreateAndAddAnimalToTheField(14, 26);
-            savannaField.CreateAndAddAnimalToTheField(15, 40);
+            savannaField.CreateAndAddAnimalToTheField(42, 42);
             //Initialize All Neigtbors
             savannaField.AddNeighbors();
 
