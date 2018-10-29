@@ -29,15 +29,17 @@ namespace Savanna.Fauna
         {
             int width = _savanna.Field.GetLength(0);
             int height = _savanna.Field.GetLength(1);
+            bool oneTarget = true;
+
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if(_savanna.Field[x, y] is GrassEater)
+                    if(_savanna.Field[x, y] is GrassEater && oneTarget)
                     {
                         _pathfinder.MoveFromTo(_savanna.Field[_x, _y], _savanna.Field[x, y]);
+                        oneTarget = false;
                     }
-                    break;
                 }
             }
         }
