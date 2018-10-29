@@ -1,9 +1,10 @@
-﻿using Savanna.Interfaces;
-using System;
+﻿using System;
+using System.Threading.Tasks;
+using Savanna.Interfaces;
 
 namespace Savanna.Services
 {
-    public class DialogWithUser
+    public class DialogWithUser : IDialog
     {
         private IRenderer _renderer;
         private IValidator _validator;
@@ -72,11 +73,12 @@ namespace Savanna.Services
             _renderer.WriteErrorMessage(message);
         }
 
-        public void GameMenu()
+        public int GameMenu()
         {
-            _renderer.WriteCenteredMessage("Savanna", 2, 0);
-            _renderer.WriteCenteredMessage("P) Start Game", 2, 1);
-            _renderer.WriteCenteredMessage("ESC) Exit", 2, 2);
+            _renderer.WriteCenteredMessage("Savanna", 2, -1);
+            int selectedOption =
+                    ConsoleHelper.MultipleChoice(true, "Start Game", "Exit");
+            return selectedOption;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Savanna.Services
     public class StartupManager
     {
         public IContainer DialogContainer;
+        public DialogWithUser dialog;
 
         public void DrawGameBorders()
         {
@@ -18,13 +19,18 @@ namespace Savanna.Services
 
         public void StartTrackingKeyboard()
         {
-            InputManager keyboardTracking = new InputManager();
-            Task.Factory.StartNew(() => keyboardTracking.TrackUserUnput());
+            InputManager.TrackUserInputTask();
+            InputManager.SetPauseTo(true);
         }
 
         public void RegisterIoCContainers()
         {
             DialogContainer = IoCBuilder.BuildDialogWithUser();
+        }
+
+        public void InitializeUserDialog()
+        {
+            dialog = DialogContainer.Resolve<DialogWithUser>();
         }
     }
 }

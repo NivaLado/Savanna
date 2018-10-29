@@ -38,7 +38,6 @@ namespace Savanna.Rendering
 
         public void WriteCenteredMessage(string message, int xOffset, int yOffset)
         {
-            ForegroundColor(ConsoleColor.White);
             CenterText(message, Globals.Width, Globals.Height, xOffset, yOffset);
             Console.Write(message);
         }
@@ -176,6 +175,10 @@ namespace Savanna.Rendering
             else if (field[x + shiftX, y + shiftY] is Ground)
             {
                 Console.Write(" ");
+            }
+            else if (field[x + shiftX, y + shiftY] is GrassEater)
+            {
+                Console.Write("A");
             }
             else if (field[x + shiftX, y + shiftY] is IAnimal)
             {

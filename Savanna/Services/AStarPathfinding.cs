@@ -1,5 +1,4 @@
-﻿using Savanna.Fauna;
-using Savanna.Interfaces;
+﻿using Savanna.Interfaces;
 using Savanna.Rendering;
 using System;
 using System.Collections.Generic;
@@ -24,11 +23,11 @@ namespace Savanna.Services
         }
         #endregion
 
-        List<ICellBase> openSet = new List<ICellBase>();
-        List<ICellBase> closedSet = new List<ICellBase>();
-        List<ICellBase> obstacleSet = new List<ICellBase>();
-        List<ICellBase> path = new List<ICellBase>();
-        bool finished;
+        private bool finished;
+        private List<ICellBase> openSet = new List<ICellBase>();
+        private List<ICellBase> closedSet = new List<ICellBase>();
+        private List<ICellBase> obstacleSet = new List<ICellBase>();
+        private List<ICellBase> path = new List<ICellBase>();
 
         IRenderer _renderer = ConsoleRenderer.GetInstance();
 

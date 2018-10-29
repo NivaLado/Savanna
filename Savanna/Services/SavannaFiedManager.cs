@@ -7,7 +7,7 @@ using System;
 
 namespace Savanna.Services
 {
-    public class SavannaFieldManager
+    public class SavannaFieldManager : ISavannaFieldManager
     {
 
         #region Singleton
@@ -26,10 +26,11 @@ namespace Savanna.Services
         }
         #endregion
 
-        public static SavannaField savanna = new SavannaField();
+        public SavannaField savanna { get; set; }
 
         public void GenerateEmptyField()
         {
+            savanna = new SavannaField();
             savanna.Field = new CellBase[savanna.Width, savanna.Height];
             for (int x = 0; x < savanna.Field.GetLength(0); x++)
             {
@@ -62,16 +63,27 @@ namespace Savanna.Services
             }
         }
 
-        public void CreateAndAddAnimalToTheField(int x, int y)
+        public void CreateAndAddAnimalToTheField(int x, int y, bool isPredator)
         {
-            var animal = new Predator(
-                x,y,
-                new GameNotifications(),
-                savanna,
-                AStarPathfinding.GetInstance());
+            CellBase animal;
+            if (isPredator)
+            {
+                animal = new Predator(
+                    x, y,
+                    new GameNotifications(),
+                    savanna,
+                    AStarPathfinding.GetInstance());
+            }
+            else
+            {
+                animal = new GrassEater(
+                    x, y,
+                    new GameNotifications(),
+                    savanna,
+                    AStarPathfinding.GetInstance());
+            }
 
             savanna.Field[x, y] = animal;
-            savanna.Field[x, y].AddNeighbords(savanna);
         }
 
         public void CreateAndAddObstacleToTheField(int x, int y)
@@ -79,7 +91,6 @@ namespace Savanna.Services
             var obstacle = new Obstacle(x,y);
 
             savanna.Field[x, y] = obstacle;
-            savanna.Field[x, y].AddNeighbords(savanna);
         }
 
         public void CreateAndAddObstacleToTheFieldRandomly()
@@ -93,7 +104,6 @@ namespace Savanna.Services
                     if (generator.Next(101) < Globals.ObstacleAppearChance)
                     {
                         savanna.Field[x, y] = new Obstacle(x, y);
-                        savanna.Field[x, y].AddNeighbords(savanna);
                     }
                 }
             }

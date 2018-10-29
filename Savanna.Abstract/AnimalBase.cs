@@ -34,9 +34,33 @@ namespace Savanna.Abstract
 
         public void Move()
         {
-            _pathfinder.MoveFromTo(_savanna.Field[_x, _y], _savanna.Field[0, 0]);
-
+            //Idle();
+            Test();
             OnAnimalMoved(data);
+        }
+
+        public void Idle()
+        {
+            for (int i = 0; i < neighbors.Count; i++)
+            {
+                if(!neighbors[i].IsObstacle)
+                {
+                    _savanna.Field[_x, _y] = _savanna.Field[neighbors[i]._x, neighbors[i]._y];
+
+                    _x = neighbors[i]._x;
+                    _y = neighbors[i]._y;
+
+                    break;
+                }
+            }
+        }
+
+        public void Test()
+        {
+            var temp = _savanna.Field[_x - 5, _y];
+
+            _savanna.Field[_x - 5, _y] = this;
+            _savanna.Field[_x, _y] = temp;
         }
 
         protected virtual void OnAnimalBorned(IAnimalData data)

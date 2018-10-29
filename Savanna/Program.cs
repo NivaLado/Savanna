@@ -4,6 +4,7 @@ using Savanna.Services;
 using Savanna.Rendering;
 using Autofac;
 using System.Threading;
+using Savanna.Constants;
 
 namespace Savanna
 {
@@ -14,26 +15,19 @@ namespace Savanna
             var startup = new StartupManager();
             startup.RegisterIoCContainers();
             startup.StartTrackingKeyboard();
+            startup.InitializeUserDialog();
             startup.DrawGameBorders();
 
-            //var dialogWithUser = startup.DialogContainer.Resolve<DialogWithUser>();
-            //dialogWithUser.GameMenu();
+            var game = new GameManager(
+                ConsoleRenderer.GetInstance(),
+                SavannaFieldManager.GetInstance(),
+                startup.dialog
+                );
 
-            var savannaField = SavannaFieldManager.GetInstance();
-            savannaField.GenerateEmptyField();
-            //Add Obstacles Before Creating Animals
-            savannaField.CreateAndAddObstacleToTheFieldRandomly();
-            //Add Animals
-            savannaField.CreateAndAddAnimalToTheField(42, 42);
-            //Initialize All Neigtbors
-            savannaField.AddNeighbors();
-
-            var game = new GameManager(ConsoleRenderer.GetInstance(), SavannaFieldManager.savanna);
-            //game.StartGame();
-            //game.ShowGame();
-            game.Render();
-            Thread.Sleep(500);
+            game.MainMenu();
+            Thread.Sleep(Globals.InputDelay);
             game.GameLoop();
+            //game.GameLoop();
 
             while (true)
             {
