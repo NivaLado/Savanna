@@ -1,10 +1,8 @@
-﻿//using Autofac;
-using System;
+﻿using System;
 using Savanna.Services;
 using Savanna.Rendering;
 using System.Threading;
 using Savanna.Constants;
-using Autofac;
 
 namespace Savanna
 {

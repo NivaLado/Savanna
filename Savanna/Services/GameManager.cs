@@ -57,9 +57,13 @@ namespace Savanna.Services
             //Add Obstacles Before Creating Animals
             _savannaManager.CreateAndAddObstacleToTheFieldRandomly();
             //Add Animals
-            _savannaManager.CreateAndAddAnimalToTheField(1, 1, 2, 3, true);
+            _savannaManager.CreateAndAddAnimalToTheField(0, 0, 2, 3, true);
+            _savannaManager.CreateAndAddAnimalToTheField(21, 21, 2, 3, true);
+            _savannaManager.CreateAndAddAnimalToTheField(42, 42, 2, 3, true);
 
-            _savannaManager.CreateAndAddAnimalToTheField(0, 0, 1, 2, false);
+            _savannaManager.CreateAndAddAnimalToTheField(19, 19, 1, 2, false);
+            _savannaManager.CreateAndAddAnimalToTheField(4, 4, 1, 2, false);
+            _savannaManager.CreateAndAddAnimalToTheField(28, 15, 1, 2, false);
             //Initialize All Neigtbors
             _savannaManager.AddNeighbors();
             _savanna = _savannaManager.savanna;

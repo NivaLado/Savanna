@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using Savanna.Abstract;
 using Savanna.Interfaces;
 
@@ -19,38 +21,64 @@ namespace Savanna.Fauna
             data.Vision = 7;
         }
 
+        private bool chase;
+        private ICellBase target;
+        private List<ICellBase> pathToTarget;
+
         public override void Behave()
         {
             if(CanAction)
             {
                 CanAction = false;
-                LookAround<GrassEater>();
-                Thread.Sleep(500);
-                Idle();
 
-                MoveFromTo();
+                LookForAVictim();
+                Thread.Sleep(300);
+                IdleOrChase();
+                Thread.Sleep(300);
+
                 _renderer.DrawGame(_savanna, 1, 1);
                 _pathfinder.ClearOldData();
                 OnAnimalMoved(data);
             }
         }
 
-        private void MoveFromTo()
+        private void LookForAVictim()
         {
-            int width = _savanna.Field.GetLength(0);
-            int height = _savanna.Field.GetLength(1);
-            bool oneTarget = true;
+            target = LookAroundFor<GrassEater>();
+            chase = (target != null) ? true : false;
+        }
 
-            for (int x = 0; x < width; x++)
+        private void IdleOrChase()
+        {
+            if(chase)
             {
-                for (int y = 0; y < height; y++)
-                {
-                    if(_savanna.Field[x, y] is GrassEater && oneTarget)
-                    {
-                        _pathfinder.MoveFromTo(_savanna.Field[_x, _y], _savanna.Field[x, y]);
-                        oneTarget = false;
-                    }
-                }
+                MoveFromTo(target._x,target._y);
+            }
+            else
+            {
+                Idle();
+            }
+        }
+
+        private void MoveFromTo(int x, int y)
+        {
+            pathToTarget = _pathfinder.MoveFromTo(_savanna.Field[_x, _y], _savanna.Field[x, y]);
+            Chase();
+        }
+
+        private void Chase()
+        {
+            //if(newPath)
+            pathToTarget.Reverse();
+            pathToTarget.RemoveAt(0);
+
+            for (int i = 0; i < pathToTarget.Count; i++)
+            {
+                Swap(pathToTarget[0]._x, pathToTarget[0]._y);
+                pathToTarget.Remove(pathToTarget[0]);
+
+                _renderer.DrawGame(_savanna, 1, 1);
+                Thread.Sleep(100);
             }
         }
     }

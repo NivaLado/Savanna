@@ -1,8 +1,10 @@
-﻿namespace Savanna.Interfaces
+﻿using System.Collections.Generic;
+
+namespace Savanna.Interfaces
 {
     public interface IPathfinder
     {
-        void MoveFromTo(ICellBase start, ICellBase end);
+        List<ICellBase> MoveFromTo(ICellBase start, ICellBase end);
         void ClearOldData();
     }
 }

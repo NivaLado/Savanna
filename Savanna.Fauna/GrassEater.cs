@@ -23,7 +23,7 @@ namespace Savanna.Fauna
             if (CanAction)
             {
                 CanAction = false;
-                LookAround<Predator>();
+                //LookAroundFor<Predator>();
                 Idle();
 
                 _renderer.DrawGame(_savanna, 1, 1);

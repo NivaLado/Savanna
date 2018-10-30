@@ -31,7 +31,7 @@ namespace Savanna.Services
 
         IRenderer _renderer = ConsoleRenderer.GetInstance();
 
-        public void MoveFromTo(ICellBase start, ICellBase end)
+        public List<ICellBase> MoveFromTo(ICellBase start, ICellBase end)
         {
             openSet.Add(start);
             
@@ -58,9 +58,8 @@ namespace Savanna.Services
                             path.Add(temp.cameFrom);
                             temp = temp.cameFrom;
                         }
-                        //VisualizePath();
-                        //VisualizeObstacles();
-                        break;
+                        VisualizePath();
+                        return path;
                     }
 
                     openSet.Remove(current);
@@ -90,16 +89,15 @@ namespace Savanna.Services
                             neighbor.f = neighbor.g + neighbor.h;
                             neighbor.cameFrom = current;
                         }
-                        if(neighbor.IsObstacle)
-                            obstacleSet.Add(neighbor);
                     }
                 }
                 else
                 {
                     Console.WriteLine("No Solution!");
-                    break;
+                    return null;
                 }
-                //VisualizeOpenClosed();
+                Thread.Sleep(50);
+                VisualizeOpenClosed();
             }
         }
 
@@ -127,21 +125,13 @@ namespace Savanna.Services
             }
         }
 
-        private void VisualizeObstacles()
-        {
-            foreach (var obstacle in obstacleSet)
-            {
-                _renderer.DrawAtXyWithColor(obstacle._x, obstacle._y, ConsoleColor.Yellow);
-            }
-        }
-
         private void VisualizePath()
         {
             foreach (var endPath in path)
             {
                 _renderer.DrawAtXyWithColor(endPath._x, endPath._y, ConsoleColor.Magenta);
             }
-            Console.ForegroundColor = ConsoleColor.White;
+            Thread.Sleep(100);
         }
 
         private double Heuristic(ICellBase neighbor, ICellBase end)
