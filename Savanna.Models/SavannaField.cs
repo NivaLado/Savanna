@@ -7,20 +7,10 @@ namespace Savanna.Models
     [Serializable]
     public class SavannaField : ISavannaField
     {
-        public int Width
-        {
-            get
-            {
-                 return Globals.Width;
-            }
-        }
-        public int Height
-        {
-            get
-            {
-                return Globals.Height;
-            }
-        }
+        public int Width => Globals.Width;
+
+        public int Height => Globals.Height;
+
         public ICellBase[,] Field { get; set; }
     }
 }

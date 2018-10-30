@@ -2,6 +2,6 @@
 {
     public interface IAnimal
     {
-        void Move();
+        //void Move();
     }
 }

@@ -164,6 +164,7 @@ namespace Savanna.Rendering
             ForegroundColor(color);
             Console.SetCursorPosition(x + 1, y + 1);
             Console.Write("*");
+            ForegroundColor(ConsoleColor.White);
         }
 
         private void SavannaVisualization(ICellBase[,] field, int x, int y, int shiftX = 0, int shiftY = 0)

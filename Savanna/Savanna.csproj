@@ -55,7 +55,6 @@
     <Compile Include="Services\GameManager.cs" />
     <Compile Include="Services\GameNotifications.cs" />
     <Compile Include="Services\InputManager.cs" />
-    <Compile Include="Services\ISavannaFieldManager.cs" />
     <Compile Include="Services\SavannaFiedManager.cs" />
     <Compile Include="Services\StartupManager.cs" />
     <Compile Include="Services\Validator.cs" />

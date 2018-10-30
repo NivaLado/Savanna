@@ -1,6 +1,7 @@
 ﻿using Savanna.Abstract;
 using Savanna.Constants;
 using Savanna.Fauna;
+using Savanna.Interfaces;
 using Savanna.Models;
 using Savanna.Rendering;
 using System;
@@ -9,7 +10,6 @@ namespace Savanna.Services
 {
     public class SavannaFieldManager : ISavannaFieldManager
     {
-
         #region Singleton
         private static readonly Lazy<SavannaFieldManager> lazy =
                             new Lazy<SavannaFieldManager>(() => new SavannaFieldManager());
@@ -26,7 +26,7 @@ namespace Savanna.Services
         }
         #endregion
 
-        public SavannaField savanna { get; set; }
+        public ISavannaField savanna { get; set; }
 
         public void GenerateEmptyField()
         {
@@ -52,23 +52,13 @@ namespace Savanna.Services
             }
         }
 
-        public void ClearNeightbors()
+        public void ClearSavannaAStarData()
         {
             for (int x = 0; x < savanna.Field.GetLength(0); x++)
             {
                 for (int y = 0; y < savanna.Field.GetLength(1); y++)
                 {
                     savanna.Field[x, y].neighbors.Clear();
-                }
-            }
-        }
-
-        public void ClearCameFrom()
-        {
-            for (int x = 0; x < savanna.Field.GetLength(0); x++)
-            {
-                for (int y = 0; y < savanna.Field.GetLength(1); y++)
-                {
                     savanna.Field[x, y].cameFrom = null;
                     savanna.Field[x, y].g = 0;
                     savanna.Field[x, y].h = 0;
@@ -77,13 +67,14 @@ namespace Savanna.Services
             }
         }
 
-        public void CreateAndAddAnimalToTheField(int x, int y, bool isPredator)
+        public void CreateAndAddAnimalToTheField(int x, int y, int speed, int runSpeed, bool isPredator)
         {
             CellBase animal;
             if (isPredator)
             {
                 animal = new Predator(
                     x, y,
+                    speed, runSpeed,
                     new GameNotifications(),
                     savanna,
                     AStarPathfinding.GetInstance(),
@@ -94,6 +85,7 @@ namespace Savanna.Services
             {
                 animal = new GrassEater(
                     x, y,
+                    speed,runSpeed,
                     new GameNotifications(),
                     savanna,
                     AStarPathfinding.GetInstance(),
@@ -107,7 +99,6 @@ namespace Savanna.Services
         public void CreateAndAddObstacleToTheField(int x, int y)
         {
             var obstacle = new Obstacle(x,y);
-
             savanna.Field[x, y] = obstacle;
         }
 

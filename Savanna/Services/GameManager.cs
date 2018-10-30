@@ -51,19 +51,15 @@ namespace Savanna.Services
             _renderer.EndTransition(_savanna);
         }
 
-        public void InitializeGameField()
+        public void InitializeGameField() //Here Should Be Factory(Animal)
         {
             _savannaManager.GenerateEmptyField();
             //Add Obstacles Before Creating Animals
             _savannaManager.CreateAndAddObstacleToTheFieldRandomly();
             //Add Animals
-            _savannaManager.CreateAndAddAnimalToTheField(21, 21, true);
+            _savannaManager.CreateAndAddAnimalToTheField(1, 1, 2, 3, true);
 
-            _savannaManager.CreateAndAddAnimalToTheField(5, 10, false);
-            _savannaManager.CreateAndAddAnimalToTheField(7, 10, false);
-            _savannaManager.CreateAndAddAnimalToTheField(9, 10, false);
-            _savannaManager.CreateAndAddAnimalToTheField(11, 10, false);
-            //_savannaManager.CreateAndAddAnimalToTheField(15, 5, false);
+            _savannaManager.CreateAndAddAnimalToTheField(0, 0, 1, 2, false);
             //Initialize All Neigtbors
             _savannaManager.AddNeighbors();
             _savanna = _savannaManager.savanna;
@@ -72,35 +68,31 @@ namespace Savanna.Services
         public void GameLoop()
         {
             ResetAction();
-            int width = _savanna.Field.GetLength(0);
-            int height = _savanna.Field.GetLength(1);
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    if (_savanna.Field[x, y] is GrassEater)
-                    {
-                        _savanna.Field[x, y].Behave();
-                    }
-                }
-            }
-
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    if (_savanna.Field[x, y] is Predator)
-                    {
-                        _savanna.Field[x, y].Behave();
-                    }
-                }
-            }
+            AnimalTurn<GrassEater>();
+            Thread.Sleep(500);
+            AnimalTurn<Predator>();
             Thread.Sleep(500);
         }
 
         public void Render()
         {
             _renderer.DrawGame(_savanna, 1, 1);
+        }
+
+        public void AnimalTurn<Animal>()
+        {
+            int width = _savanna.Field.GetLength(0);
+            int height = _savanna.Field.GetLength(1);
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
+                {
+                    if (_savanna.Field[x, y] is Animal)
+                    {
+                        _savanna.Field[x, y].Behave();
+                    }
+                }
+            }
         }
 
         public void ResetAction()

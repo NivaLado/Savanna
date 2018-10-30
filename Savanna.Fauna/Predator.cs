@@ -1,27 +1,37 @@
-﻿using Savanna.Abstract;
+﻿using System.Threading;
+using Savanna.Abstract;
 using Savanna.Interfaces;
 
 namespace Savanna.Fauna
 {
     public class Predator : AnimalBase, IAnimal
     {
-        public Predator(int x, int y, 
+        public Predator(
+            int x, int y, 
+            int speed, int runSpeed,
             INotificator notificator, 
             ISavannaField field, 
             IPathfinder pathfinder,
             IRenderer renderer) 
-            : base(x, y, notificator, field, pathfinder, renderer)
+            : base(x, y, speed, runSpeed, notificator, field, pathfinder, renderer)
         {
             data.IsPredator = true;
-            data.Speed = 1;
+            data.Vision = 7;
         }
 
         public override void Behave()
         {
             if(CanAction)
             {
-                Move();
+                CanAction = false;
+                LookAround<GrassEater>();
+                Thread.Sleep(500);
+                Idle();
+
                 MoveFromTo();
+                _renderer.DrawGame(_savanna, 1, 1);
+                _pathfinder.ClearOldData();
+                OnAnimalMoved(data);
             }
         }
 

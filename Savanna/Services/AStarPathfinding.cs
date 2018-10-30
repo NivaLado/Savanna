@@ -33,12 +33,10 @@ namespace Savanna.Services
 
         public void MoveFromTo(ICellBase start, ICellBase end)
         {
-            ClearOldData();
             openSet.Add(start);
             
             while (true)
             {
-                int test = 0;
                 if (openSet.Count > 0)
                 {
                     var winner = 0;
@@ -60,7 +58,7 @@ namespace Savanna.Services
                             path.Add(temp.cameFrom);
                             temp = temp.cameFrom;
                         }
-                        VisualizePath();
+                        //VisualizePath();
                         //VisualizeObstacles();
                         break;
                     }
@@ -101,15 +99,14 @@ namespace Savanna.Services
                     Console.WriteLine("No Solution!");
                     break;
                 }
-                VisualizeOpenClosed();
+                //VisualizeOpenClosed();
             }
         }
 
-        private void ClearOldData()
+        public void ClearOldData()
         {
             var savannaManager = SavannaFieldManager.GetInstance();
-            savannaManager.ClearCameFrom();
-            savannaManager.ClearNeightbors();
+            savannaManager.ClearSavannaAStarData();
             savannaManager.AddNeighbors();
 
             path.Clear();

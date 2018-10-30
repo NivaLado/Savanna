@@ -1,14 +1,12 @@
-﻿using Savanna.Models;
-
-namespace Savanna.Services
+﻿namespace Savanna.Interfaces
 {
     public interface ISavannaFieldManager
     {
-        SavannaField savanna { get; set; }
+        ISavannaField savanna { get; set; }
         void GenerateEmptyField();
         void AddNeighbors();
-        void ClearNeightbors();
-        void CreateAndAddAnimalToTheField(int x, int y, bool isPredator);
+        void ClearSavannaAStarData();
+        void CreateAndAddAnimalToTheField(int x, int y, int speed, int runSpeed, bool isPredator);
         void CreateAndAddObstacleToTheField(int x, int y);
         void CreateAndAddObstacleToTheFieldRandomly();
     }

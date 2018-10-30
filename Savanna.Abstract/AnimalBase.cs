@@ -1,6 +1,8 @@
 ﻿using System;
 using Savanna.Models;
 using Savanna.Interfaces;
+using System.Threading;
+using System.Collections.Generic;
 
 namespace Savanna.Abstract
 {
@@ -17,11 +19,23 @@ namespace Savanna.Abstract
         protected IAnimalData data;
         static int id = 0;
 
-        public AnimalBase(int x, int y,INotificator notificator, ISavannaField savanna, IPathfinder pathfinder, IRenderer renderer) 
+        public AnimalBase(
+            int x, int y,
+            int speed, int runSpeed,
+            INotificator notificator, 
+            ISavannaField savanna, 
+            IPathfinder pathfinder, 
+            IRenderer renderer) 
             : base(x, y)
         {
             id++;
-            data = new AnimalData() { ID = id };
+            data = new AnimalData()
+            {
+                ID = id,
+                RunSpeed = runSpeed,
+                Speed = speed,
+            };
+
 
             _savanna = savanna;
             _notificator = notificator;
@@ -34,18 +48,50 @@ namespace Savanna.Abstract
             OnAnimalBorned(data);
         }
 
-        public void Move()
+        public void LookAround<AnimalType>()
         {
-            CanAction = false;
-            Idle();
-            _renderer.DrawGame(_savanna, 1 , 1);
-            OnAnimalMoved(data);
+            List<ICellBase> vision = new List<ICellBase>();
+            vision = RecursiveVision<AnimalType>(neighbors, vision, data.Vision, 0);
+            
+            #region Visualization
+            foreach (var item in vision)
+            {
+                _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.Blue);
+            }
+            Thread.Sleep(200);
+            #endregion
+        }
+
+        public List<ICellBase> RecursiveVision<T>(
+                        List<ICellBase> myNeighbors, 
+                        List<ICellBase> vision, int stop, int pass)
+        {
+            if (stop == pass)
+                return vision;
+            pass++;
+            foreach (var item in myNeighbors)
+            {
+                if(item is T)
+                {
+                    vision.Add(item);
+                    Console.WriteLine("Spoted " + item +  "at " + item._x);
+                    return vision;
+                }
+                else if(!vision.Contains(item) && !item.IsObstacle)
+                {
+                    vision.Add(item);
+                }
+                RecursiveVision<T>(item.neighbors, vision, stop, pass);
+            }
+            return vision;
         }
 
         public void Idle()
         {
             Random random = new Random(Guid.NewGuid().GetHashCode());
             int number = random.Next(0, 4);
+
+
             switch (number)
             {
                 case 0:
@@ -123,7 +169,6 @@ namespace Savanna.Abstract
                 Swap(0, -1);
             }
         }
-
 
         protected virtual void OnAnimalBorned(IAnimalData data)
         {

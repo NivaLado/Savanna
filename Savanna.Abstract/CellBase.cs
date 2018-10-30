@@ -8,7 +8,7 @@ namespace Savanna.Abstract
         public int _x { get; set; }
         public int _y { get; set; }
 
-        public double f { get; set; }
+        public double f { get; set; } //Magic
         public double g { get; set; }
         public double h { get; set; }
         public bool IsObstacle { get; set; }

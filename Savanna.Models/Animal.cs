@@ -8,7 +8,9 @@ namespace Savanna.Models
     {
         public int ID { get; set; }
         public int Speed { get; set; }
-        public ICellBase Position { get; set; }
+        public int Vision { get; set; }
+        public int RunSpeed { get; set; }
+        public bool IsRunning { get; set; }
         public bool IsPredator { get; set; }
     }
 }

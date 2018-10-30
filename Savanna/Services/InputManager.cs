@@ -6,7 +6,6 @@ namespace Savanna.Services
 {
     public class InputManager
     {
-
         #region Singleton
         private static readonly Lazy<InputManager> lazy =
                             new Lazy<InputManager>(() => new InputManager());
