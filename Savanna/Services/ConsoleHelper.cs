@@ -14,7 +14,7 @@ namespace Savanna.Services
             ConsoleKey key;
             IRenderer _renderer = ConsoleRenderer.GetInstance();
 
-            Console.CursorVisible = false;
+            _renderer.CursorVisible(false);
 
             do
             {
@@ -64,8 +64,6 @@ namespace Savanna.Services
                         }
                 }
             } while (key != ConsoleKey.Enter);
-
-            Console.CursorVisible = true;
 
             return currentSelection;
         }

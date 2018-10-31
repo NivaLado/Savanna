@@ -1,8 +1,8 @@
 ﻿using System;
-using Savanna.Models;
-using Savanna.Interfaces;
-using System.Threading;
 using System.Collections.Generic;
+using Savanna.Constants;
+using Savanna.Interfaces;
+using Savanna.Models;
 
 namespace Savanna.Abstract
 {
@@ -11,8 +11,7 @@ namespace Savanna.Abstract
         public event EventHandler<AnimalEventArgs> AnimalBorned;
         public event EventHandler<AnimalEventArgs> AnimalMoved;
 
-        readonly INotificator _notificator;
-
+        protected INotificator _notificator;
         protected ISavannaField _savanna;
         protected IPathfinder _pathfinder;
         protected IRenderer _renderer;
@@ -22,10 +21,10 @@ namespace Savanna.Abstract
         public AnimalBase(
             int x, int y,
             int speed, int runSpeed,
-            INotificator notificator, 
-            ISavannaField savanna, 
-            IPathfinder pathfinder, 
-            IRenderer renderer) 
+            INotificator notificator,
+            ISavannaField savanna,
+            IPathfinder pathfinder,
+            IRenderer renderer)
             : base(x, y)
         {
             id++;
@@ -40,7 +39,7 @@ namespace Savanna.Abstract
             _savanna = savanna;
             _notificator = notificator;
             _pathfinder = pathfinder;
-            _renderer  = renderer;
+            _renderer = renderer;
 
             AnimalMoved += notificator.OnAnimalMoved;
             AnimalBorned += notificator.OnAnimalBorned;
@@ -56,56 +55,56 @@ namespace Savanna.Abstract
 
             foreach (var item in vision)
             {
-                if(item is AnimalType)
+                if (item is AnimalType)
                 {
-                    target = item; 
+                    target = item;
                 }
             }
 
-            //Console.SetCursorPosition(60, 20);
-            //Console.WriteLine("Will i chase or run? " + RunOrChase);
+            //#region Visualization
+            //foreach (var item in vision)
+            //{
+            //    if (item is AnimalType)
+            //    {
+            //        _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.DarkRed);
+            //    }
+            //    else if (item == this)
+            //    {
 
-            #region Visualization
-            foreach (var item in vision)
-            {
-                if(item is AnimalType)
-                {
-                    _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.DarkRed);
-                }
-                else if (item == this)
-                {
-                    
-                } else
-                {
-                    _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.Blue);
-                }
-            }
-            Thread.Sleep(200);
-            #endregion
+            //    }
+            //    else
+            //    {
+            //        _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.Blue);
+            //    }
+            //}
+            //System.Threading.Thread.Sleep(Globals.VisionDelay);
+            //#endregion
 
             return target;
         }
 
         public List<ICellBase> VisualizeRecursiveVision<T>(
-                        List<ICellBase> myNeighbors, 
-                        List<ICellBase> vision, 
-                        int stop, int pass)
+                List<ICellBase> myNeighbors,
+                List<ICellBase> vision,
+                int stop, int pass)
         {
             if (stop == pass)
                 return vision;
             pass++;
             foreach (var item in myNeighbors)
             {
-                if (item is T)
+                if (!vision.Contains(item))
                 {
-                    if (!vision.Contains(item))
+                    if (item is T)
+                    {
                         vision.Add(item);
-                    return vision;
-                }
-                else if (!vision.Contains(item) && !item.IsObstacle)
-                {
-                    vision.Add(item);
-                    VisualizeRecursiveVision<T>(item.neighbors, vision, stop, pass);
+                        return vision;
+                    }
+                    else if (!item.IsObstacle)
+                    {
+                        vision.Add(item);
+                        VisualizeRecursiveVision<T>(item.neighbors, vision, stop, pass);
+                    }
                 }
             }
             return vision;
@@ -113,64 +112,25 @@ namespace Savanna.Abstract
 
         public void Idle()
         {
-            Random random = new Random(Guid.NewGuid().GetHashCode());
-            int number = random.Next(0, 4);
+            Random random = new Random();
+            int steps = 0;
 
-            switch (number)
+            while (steps != data.Speed)
             {
-                case 0:
-                    MoveRight();
-                    break;
-                case 1:
-                    MoveLeft();
-                    break;
-                case 2:
-                    MoveTop();
-                    break;
-                case 3:
-                    MoveDown();
-                    break;
-            }
-        }
-
-        public void SmallSwap(int x, int y)
-        {
-           var newLocation = _savanna.Field[_x + x, _y + y];
-
-            if(!newLocation.IsObstacle)
-            {
-                _savanna.Field[_x + x, _y + y] = this;
-                _savanna.Field[_x, _y] = newLocation;
-
-                int tempX = _x; int tempY = _y;
-                //double tempG = g; double tempH = h;
-                //double tempF = f; var tempNeighbors = neighbors; 
-
-                _x = newLocation._x;
-                _y = newLocation._y;
-                //g = newLocation.g;
-                //h = newLocation.h;
-                //f = newLocation.f;
-                //neighbors = newLocation.neighbors;
-
-                newLocation._x = tempX;
-                newLocation._y = tempY;
-                //newLocation.g = tempG;
-                //newLocation.h = tempH;
-                //newLocation.f = tempF;
-                //newLocation.neighbors = tempNeighbors;
+                List<ICellBase> direction = PossibleDirections();
+                int index = random.Next(0, direction.Count);
+                Swap(direction[index]._x, direction[index]._y);
+                steps++;
             }
         }
 
         public void Swap(int x, int y)
         {
             var newLocation = _savanna.Field[x, y];
-
             if (!newLocation.IsObstacle)
             {
                 _savanna.Field[x, y] = this;
                 _savanna.Field[_x, _y] = newLocation;
-
                 int tempX = _x; int tempY = _y;
 
                 _x = newLocation._x;
@@ -178,39 +138,49 @@ namespace Savanna.Abstract
 
                 newLocation._x = tempX;
                 newLocation._y = tempY;
+                _renderer.DrawGame(_savanna, Globals.XOffset, Globals.YOffset); //Test
+                System.Threading.Thread.Sleep(Globals.SwapDelay);
             }
         }
 
-        public void MoveRight()
+        public List<ICellBase> PossibleDirections()
         {
+            List<ICellBase> direction = new List<ICellBase>();
+            var field = _savanna.Field;
             if (_x < _savanna.Width - 1)
             {
-                SmallSwap(1, 0);
+                if (!Obstacle(1, 0))
+                {
+                    direction.Add(field[_x + 1, _y]);
+                }
             }
-        }
-
-        public void MoveLeft()
-        {
             if (_x > 0)
             {
-                SmallSwap(-1, 0);
+                if (!Obstacle(-1, 0))
+                {
+                    direction.Add(field[_x - 1, _y]);
+                }
             }
-        }
-
-        public void MoveTop()
-        {
             if (_y < _savanna.Height - 1)
             {
-                SmallSwap(0, 1);
+                if (!Obstacle(0, 1))
+                {
+                    direction.Add(field[_x, _y + 1]);
+                }
             }
-        }
-
-        public void MoveDown()
-        {
             if (_y > 0)
             {
-                SmallSwap(0, -1);
+                if (!Obstacle(0, -1))
+                {
+                    direction.Add(field[_x, _y - 1]);
+                }
             }
+            return direction;
+        }
+
+        private bool Obstacle(int x, int y)
+        {
+            return _savanna.Field[_x + x, _y + y].IsObstacle;
         }
 
         protected virtual void OnAnimalBorned(IAnimalData data)

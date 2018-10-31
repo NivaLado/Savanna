@@ -1,5 +1,5 @@
-﻿using Savanna.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Savanna.Interfaces;
 
 namespace Savanna.Abstract
 {
@@ -8,9 +8,10 @@ namespace Savanna.Abstract
         public int _x { get; set; }
         public int _y { get; set; }
 
-        public double f { get; set; } //Magic
-        public double g { get; set; }
-        public double h { get; set; }
+        public double sum { get; set; }
+        public double distance { get; set; }
+        public double heuristic { get; set; }
+
         public bool IsObstacle { get; set; }
         public bool CanAction { get; set; }
         public List<ICellBase> neighbors { get; set; }
@@ -23,12 +24,11 @@ namespace Savanna.Abstract
         }
 
 
-        public void AddNeighbords(ISavannaField savanna)
+        public void AddNeighbors(ISavannaField savanna)
         {
-            if(neighbors== null)
-                neighbors = new List<ICellBase>();
+            neighbors = new List<ICellBase>();
 
-            if( _x < savanna.Width - 1)
+            if (_x < savanna.Width - 1)
             {
                 neighbors.Add(savanna.Field[_x + 1, _y]);
             }
@@ -36,11 +36,11 @@ namespace Savanna.Abstract
             {
                 neighbors.Add(savanna.Field[_x - 1, _y]);
             }
-            if(_y < savanna.Height - 1)
+            if (_y < savanna.Height - 1)
             {
                 neighbors.Add(savanna.Field[_x, _y + 1]);
             }
-            if( _y > 0)
+            if (_y > 0)
             {
                 neighbors.Add(savanna.Field[_x, _y - 1]);
             }

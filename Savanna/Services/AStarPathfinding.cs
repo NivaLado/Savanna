@@ -1,8 +1,8 @@
-﻿using Savanna.Interfaces;
-using Savanna.Rendering;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Savanna.Interfaces;
+using Savanna.Rendering;
 
 namespace Savanna.Services
 {
@@ -34,7 +34,7 @@ namespace Savanna.Services
         public List<ICellBase> MoveFromTo(ICellBase start, ICellBase end)
         {
             openSet.Add(start);
-            
+
             while (true)
             {
                 if (openSet.Count > 0)
@@ -42,7 +42,7 @@ namespace Savanna.Services
                     var winner = 0;
                     for (int i = 1; i < openSet.Count; i++)
                     {
-                        if (openSet[i].f < openSet[winner].f)
+                        if (openSet[i].sum < openSet[winner].sum)
                         {
                             winner = i;
                         }
@@ -59,6 +59,7 @@ namespace Savanna.Services
                             temp = temp.cameFrom;
                         }
                         VisualizePath();
+                        Thread.Sleep(500);
                         return path;
                     }
 
@@ -72,21 +73,21 @@ namespace Savanna.Services
 
                         if (!closedSet.Contains(neighbor) && !neighbor.IsObstacle)
                         {
-                            var tempG = current.g + 1;
+                            var tempG = current.distance + 1;
                             if (openSet.Contains(neighbor))
                             {
-                                if (tempG < neighbor.g)
+                                if (tempG < neighbor.distance)
                                 {
-                                    neighbor.g = tempG;
+                                    neighbor.distance = tempG;
                                 }
                             }
                             else
                             {
-                                neighbor.g = tempG;
+                                neighbor.distance = tempG;
                                 openSet.Add(neighbor);
                             }
-                            neighbor.h = Heuristic(neighbor, end);
-                            neighbor.f = neighbor.g + neighbor.h;
+                            neighbor.heuristic = Heuristic(neighbor, end);
+                            neighbor.sum = neighbor.distance + neighbor.heuristic;
                             neighbor.cameFrom = current;
                         }
                     }
@@ -117,11 +118,11 @@ namespace Savanna.Services
         {
             foreach (var open in openSet)
             {
-               _renderer.DrawAtXyWithColor(open._x, open._y, ConsoleColor.Green);
+                _renderer.DrawAtXyWithColor(open._x, open._y, ConsoleColor.Green);
             }
             foreach (var closed in closedSet)
             {
-               _renderer.DrawAtXyWithColor(closed._x, closed._y, ConsoleColor.Red);
+                _renderer.DrawAtXyWithColor(closed._x, closed._y, ConsoleColor.Red);
             }
         }
 
@@ -134,10 +135,10 @@ namespace Savanna.Services
             Thread.Sleep(100);
         }
 
-        private double Heuristic(ICellBase neighbor, ICellBase end)
+        public double Heuristic(ICellBase neighbor, ICellBase end)
         {
             return Math.Abs(neighbor._x - end._x) + Math.Abs(neighbor._y - end._y); //Manhattan Distance
-            //return GetDistance(neighbor.x, neighbor.y, end.x, end.y); //Euclidean distance
+            //return GetDistance(neighbor._x, neighbor._y, end._x, end._y); //Euclidean distance
         }
 
         private double GetDistance(double x1, double y1, double x2, double y2)

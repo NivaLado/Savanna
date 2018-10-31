@@ -1,9 +1,9 @@
-﻿using Savanna.Services;
-using Savanna.Rendering;
+﻿using Autofac;
 using Savanna.Interfaces;
-using Autofac;
+using Savanna.Rendering;
+using Savanna.Services;
 
-namespace Savanna
+namespace Savanna.Containers
 {
     public class IoCBuilder
     {

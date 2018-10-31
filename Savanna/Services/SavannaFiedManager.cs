@@ -1,10 +1,10 @@
-﻿using Savanna.Abstract;
+﻿using System;
+using Savanna.Abstract;
 using Savanna.Constants;
 using Savanna.Fauna;
 using Savanna.Interfaces;
 using Savanna.Models;
 using Savanna.Rendering;
-using System;
 
 namespace Savanna.Services
 {
@@ -36,7 +36,7 @@ namespace Savanna.Services
             {
                 for (int y = 0; y < savanna.Field.GetLength(1); y++)
                 {
-                    savanna.Field[x, y] = new Ground(x, y);
+                    savanna.Field[x, y] = new Ground(x, y, savanna);
                 }
             }
         }
@@ -47,7 +47,7 @@ namespace Savanna.Services
             {
                 for (int y = 0; y < savanna.Field.GetLength(1); y++)
                 {
-                    savanna.Field[x, y].AddNeighbords(savanna);
+                    savanna.Field[x, y].AddNeighbors(savanna);
                 }
             }
         }
@@ -60,9 +60,9 @@ namespace Savanna.Services
                 {
                     savanna.Field[x, y].neighbors.Clear();
                     savanna.Field[x, y].cameFrom = null;
-                    savanna.Field[x, y].g = 0;
-                    savanna.Field[x, y].h = 0;
-                    savanna.Field[x, y].f = 0;
+                    savanna.Field[x, y].distance = 0;
+                    savanna.Field[x, y].heuristic = 0;
+                    savanna.Field[x, y].sum = 0;
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace Savanna.Services
             {
                 animal = new GrassEater(
                     x, y,
-                    speed,runSpeed,
+                    speed, runSpeed,
                     new GameNotifications(),
                     savanna,
                     AStarPathfinding.GetInstance(),
@@ -98,7 +98,7 @@ namespace Savanna.Services
 
         public void CreateAndAddObstacleToTheField(int x, int y)
         {
-            var obstacle = new Obstacle(x,y);
+            var obstacle = new Obstacle(x, y, savanna);
             savanna.Field[x, y] = obstacle;
         }
 
@@ -112,7 +112,7 @@ namespace Savanna.Services
                 {
                     if (generator.Next(101) < Globals.ObstacleAppearChance)
                     {
-                        savanna.Field[x, y] = new Obstacle(x, y);
+                        savanna.Field[x, y] = new Obstacle(x, y, savanna);
                     }
                 }
             }

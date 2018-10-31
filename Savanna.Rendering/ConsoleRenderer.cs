@@ -30,6 +30,11 @@ namespace Savanna.Rendering
             Console.WriteLine(errorMessage);
         }
 
+        public void CursorVisible(bool visible)
+        {
+            Console.CursorVisible = visible;
+        }
+
         public void WriteMessage(string message)
         {
             ForegroundColor(ConsoleColor.White);
@@ -48,7 +53,7 @@ namespace Savanna.Rendering
             int centerWidthConsideringMessage = width / 2 - messageWidth / 2;
             int centerHeightConsideringMessage = height / 2;
             Console.SetCursorPosition(
-                centerWidthConsideringMessage + xOffset, 
+                centerWidthConsideringMessage + xOffset,
                 centerHeightConsideringMessage + yOffset);
         }
 
@@ -76,7 +81,7 @@ namespace Savanna.Rendering
             Console.SetCursorPosition(0, 0);
         }
 
-        public void DrawGameBorders(int width, int height , int xOffset = 0, int yOffset = 0)
+        public void DrawGameBorders(int width, int height, int xOffset = 0, int yOffset = 0)
         {
             DrawTopLine(width);
             for (int y = 0; y < height; y++)
@@ -105,7 +110,7 @@ namespace Savanna.Rendering
 
             for (int u = 0; u < iterations; u++)
             {
-                if ( u == iterations -1)
+                if (u == iterations - 1)
                 {
                     h--;
                 }
@@ -187,7 +192,7 @@ namespace Savanna.Rendering
             }
         }
 
-        private static void Conditions(int direction, ref int shiftX, ref int shiftY)
+        private void Conditions(int direction, ref int shiftX, ref int shiftY)
         {
             int directionModule = direction % 4;
             switch (directionModule)
@@ -215,7 +220,7 @@ namespace Savanna.Rendering
             Console.ForegroundColor = color;
         }
 
-        private static void DrawTopLine(int width)
+        private void DrawTopLine(int width)
         {
             Console.Write("╔");
 
@@ -228,7 +233,7 @@ namespace Savanna.Rendering
             Console.WriteLine("\r");
         }
 
-        private static void DrawBottomLine(int width)
+        private void DrawBottomLine(int width)
         {
             Console.Write("╚");
 
@@ -239,7 +244,7 @@ namespace Savanna.Rendering
             Console.WriteLine("\r");
         }
 
-        private static void DrawLeftBorder(int width, int xOffset)
+        private void DrawLeftBorder(int width, int xOffset)
         {
             if (width == 0)
             {
@@ -248,7 +253,7 @@ namespace Savanna.Rendering
             }
         }
 
-        private static void DrawRightBorder(int width, int xOffset, int gridWidth)
+        private void DrawRightBorder(int width, int xOffset, int gridWidth)
         {
             if (width == gridWidth - 1)
             {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
+﻿using System.Collections.Generic;
 using Savanna.Abstract;
 using Savanna.Interfaces;
 
@@ -9,16 +7,17 @@ namespace Savanna.Fauna
     public class Predator : AnimalBase, IAnimal
     {
         public Predator(
-            int x, int y, 
+            int x, int y,
             int speed, int runSpeed,
-            INotificator notificator, 
-            ISavannaField field, 
+            INotificator notificator,
+            ISavannaField field,
             IPathfinder pathfinder,
-            IRenderer renderer) 
+            IRenderer renderer)
             : base(x, y, speed, runSpeed, notificator, field, pathfinder, renderer)
         {
             data.IsPredator = true;
-            data.Vision = 7;
+            data.Vision = 15;
+            data.Speed = speed;
         }
 
         private bool chase;
@@ -27,17 +26,14 @@ namespace Savanna.Fauna
 
         public override void Behave()
         {
-            if(CanAction)
+            if (CanAction)
             {
                 CanAction = false;
+                _pathfinder.ClearOldData();
 
                 LookForAVictim();
-                Thread.Sleep(300);
                 IdleOrChase();
-                Thread.Sleep(300);
 
-                _renderer.DrawGame(_savanna, 1, 1);
-                _pathfinder.ClearOldData();
                 OnAnimalMoved(data);
             }
         }
@@ -50,9 +46,9 @@ namespace Savanna.Fauna
 
         private void IdleOrChase()
         {
-            if(chase)
+            if (chase)
             {
-                MoveFromTo(target._x,target._y);
+                MoveFromTo(target._x, target._y);
             }
             else
             {
@@ -68,18 +64,24 @@ namespace Savanna.Fauna
 
         private void Chase()
         {
-            //if(newPath)
             pathToTarget.Reverse();
             pathToTarget.RemoveAt(0);
 
-            for (int i = 0; i < pathToTarget.Count; i++)
+            for (int i = 0; i < data.RunSpeed; i++)
             {
+                if (pathToTarget[0] is GrassEater)
+                {
+                    var victim = pathToTarget[0] as GrassEater;
+                    victim.TakeDamage();
+                    pathToTarget.Clear();
+                    break;
+                }
+
                 Swap(pathToTarget[0]._x, pathToTarget[0]._y);
                 pathToTarget.Remove(pathToTarget[0]);
-
-                _renderer.DrawGame(_savanna, 1, 1);
-                Thread.Sleep(100);
             }
+
+            chase = false;
         }
     }
 }
