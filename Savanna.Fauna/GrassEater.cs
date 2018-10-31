@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Savanna.Abstract;
+using Savanna.Constants;
 using Savanna.Interfaces;
 
 namespace Savanna.Fauna
@@ -19,7 +20,7 @@ namespace Savanna.Fauna
         : base(x, y, speed, runSpeed, notificator, field, pathfinder, renderer)
         {
             data.IsPredator = false;
-            data.Vision = 4;
+            data.Vision = 6;
             data.Speed = speed;
         }
 
@@ -84,6 +85,7 @@ namespace Savanna.Fauna
         public void TakeDamage()
         {
             _savanna.Field[_x, _y] = new Ground(_x, _y, _savanna);
+            _renderer.DrawGame(_savanna, Globals.XOffset, Globals.YOffset);
         }
     }
 }

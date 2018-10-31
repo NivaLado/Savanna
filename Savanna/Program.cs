@@ -23,8 +23,7 @@ namespace Savanna
                 );
 
             game.MainMenu();
-            
-            while(true)
+            while (true)
             {
                 game.GameLoop();
             }

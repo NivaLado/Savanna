@@ -53,12 +53,12 @@ namespace Savanna.Services
         {
             _savannaManager.GenerateEmptyField();
             //Add Obstacles Before Creating Animals
-            //_savannaManager.CreateAndAddObstacleToTheFieldRandomly();
+            _savannaManager.CreateAndAddObstacleToTheFieldRandomly();
             //TestObstacles();
             //Add Animals
-
-            _savannaManager.CreateAndAddAnimalToTheField(21, 21, 10, 15, true);
-
+            //_savannaManager.CreateAndAddAnimalToTheField(0, 0, 10, 15, true);
+            TestLions();
+            TestGrassEaters();
             //Initialize All Neigtbors
             _savannaManager.AddNeighbors();
             _savanna = _savannaManager.savanna;
@@ -129,20 +129,30 @@ namespace Savanna.Services
 
         private void TestLions()
         {
-            _savannaManager.CreateAndAddAnimalToTheField(21, 21, 10, 15, true);
-            _savannaManager.CreateAndAddAnimalToTheField(5, 5, 10, 15, true);
-            _savannaManager.CreateAndAddAnimalToTheField(0, 0, 10, 15, true);
-            _savannaManager.CreateAndAddAnimalToTheField(42, 42, 10, 15, true);
+            _savannaManager.CreateAndAddAnimalToTheField(1, 4, 10, 15, true);
+            _savannaManager.CreateAndAddAnimalToTheField(27, 42, 10, 15, true);
+            _savannaManager.CreateAndAddAnimalToTheField(13, 32, 10, 15, true);
+            _savannaManager.CreateAndAddAnimalToTheField(36, 26, 10, 15, true);
+            _savannaManager.CreateAndAddAnimalToTheField(11, 35, 10, 15, true);
+            _savannaManager.CreateAndAddAnimalToTheField(6, 27, 10, 15, true);
+            _savannaManager.CreateAndAddAnimalToTheField(24, 20, 10, 15, true);
+            _savannaManager.CreateAndAddAnimalToTheField(34, 11, 10, 15, true);
+            _savannaManager.CreateAndAddAnimalToTheField(5, 10, 10, 15, true);
+            _savannaManager.CreateAndAddAnimalToTheField(20, 11, 10, 15, true);
         }
 
         private void TestGrassEaters()
         {
-            _savannaManager.CreateAndAddAnimalToTheField(42, 42, 12, 5, false);
-            _savannaManager.CreateAndAddAnimalToTheField(19, 19, 12, 5, false);
-            _savannaManager.CreateAndAddAnimalToTheField(28, 15, 12, 5, false);
-            _savannaManager.CreateAndAddAnimalToTheField(42, 2, 12, 5, false);
-            _savannaManager.CreateAndAddAnimalToTheField(19, 9, 12, 5, false);
+            _savannaManager.CreateAndAddAnimalToTheField(30, 35, 12, 5, false);
+            _savannaManager.CreateAndAddAnimalToTheField(40, 9, 12, 5, false);
+            _savannaManager.CreateAndAddAnimalToTheField(17, 27, 12, 5, false);
+            _savannaManager.CreateAndAddAnimalToTheField(42, 8, 12, 5, false);
+            _savannaManager.CreateAndAddAnimalToTheField(17, 30, 12, 5, false);
             _savannaManager.CreateAndAddAnimalToTheField(8, 15, 12, 5, false);
+            _savannaManager.CreateAndAddAnimalToTheField(7, 9, 12, 5, false);
+            _savannaManager.CreateAndAddAnimalToTheField(17, 26, 12, 5, false);
+            _savannaManager.CreateAndAddAnimalToTheField(29, 11, 12, 5, false);
+            _savannaManager.CreateAndAddAnimalToTheField(24, 7, 12, 5, false);
         }
     }
 }

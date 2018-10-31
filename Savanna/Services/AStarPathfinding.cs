@@ -135,15 +135,14 @@ namespace Savanna.Services
             Thread.Sleep(100);
         }
 
-        public double Heuristic(ICellBase neighbor, ICellBase end)
+        public double Heuristic(ICellBase current, ICellBase end)
         {
-            return Math.Abs(neighbor._x - end._x) + Math.Abs(neighbor._y - end._y); //Manhattan Distance
-            //return GetDistance(neighbor._x, neighbor._y, end._x, end._y); //Euclidean distance
+            return Math.Abs(current._x - end._x) + Math.Abs(current._y - end._y); //Manhattan Distance
         }
 
-        private double GetDistance(double x1, double y1, double x2, double y2)
+        public double GetDistance(ICellBase current, ICellBase end)
         {
-            return Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
+            return Math.Sqrt(Math.Pow((end._x - current._x), 2) + Math.Pow((end._y - current._y), 2)); //Euclidean distance
         }
     }
 }

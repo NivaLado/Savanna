@@ -51,7 +51,7 @@ namespace Savanna.Abstract
         {
             ICellBase target = null;
             List<ICellBase> vision = new List<ICellBase>();
-            vision = VisualizeRecursiveVision<AnimalType>(neighbors, vision, data.Vision, 0);
+            vision = DrawCircle<AnimalType>(vision);
 
             foreach (var item in vision)
             {
@@ -60,50 +60,48 @@ namespace Savanna.Abstract
                     target = item;
                 }
             }
-
-            //#region Visualization
-            //foreach (var item in vision)
-            //{
-            //    if (item is AnimalType)
-            //    {
-            //        _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.DarkRed);
-            //    }
-            //    else if (item == this)
-            //    {
-
-            //    }
-            //    else
-            //    {
-            //        _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.Blue);
-            //    }
-            //}
-            //System.Threading.Thread.Sleep(Globals.VisionDelay);
-            //#endregion
+            #region Visualization
+            foreach (var item in vision)
+            {
+                if (item is AnimalType)
+                {
+                    _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.DarkRed);
+                }
+                else if(item == this)
+                {
+                    
+                }
+                else
+                {
+                    _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.Blue);
+                }
+            }
+            System.Threading.Thread.Sleep(Globals.VisionDelay);
+            #endregion
 
             return target;
         }
 
-        public List<ICellBase> VisualizeRecursiveVision<T>(
-                List<ICellBase> myNeighbors,
-                List<ICellBase> vision,
-                int stop, int pass)
+        public List<ICellBase> DrawCircle<AnimalType>(List<ICellBase> vision)
         {
-            if (stop == pass)
-                return vision;
-            pass++;
-            foreach (var item in myNeighbors)
+            for (int x = 0; x < _savanna.Width; x++)
             {
-                if (!vision.Contains(item))
+                for (int y = 0; y < _savanna.Height; y++)
                 {
-                    if (item is T)
+                    if (true)
                     {
-                        vision.Add(item);
-                        return vision;
-                    }
-                    else if (!item.IsObstacle)
+                        var euclidean = _pathfinder.GetDistance(this, _savanna.Field[x, y]);
+                        if (euclidean <= data.Vision)
+                        {
+                            vision.Add(_savanna.Field[x, y]);
+                        }
+                    } else //Testing
                     {
-                        vision.Add(item);
-                        VisualizeRecursiveVision<T>(item.neighbors, vision, stop, pass);
+                        var manhattan = _pathfinder.Heuristic(this, _savanna.Field[x, y]);
+                        if (manhattan <= data.Vision)
+                        {
+                            vision.Add(_savanna.Field[x, y]);
+                        }
                     }
                 }
             }

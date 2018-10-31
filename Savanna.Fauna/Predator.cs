@@ -16,7 +16,7 @@ namespace Savanna.Fauna
             : base(x, y, speed, runSpeed, notificator, field, pathfinder, renderer)
         {
             data.IsPredator = true;
-            data.Vision = 15;
+            data.Vision = 10;
             data.Speed = speed;
         }
 

@@ -1,0 +1,49 @@
+﻿        //public List<ICellBase> VisualizeRecursiveVision<T>(
+        //        List<ICellBase> myNeighbors,
+        //        List<ICellBase> vision,
+        //        int stop, int pass)
+        //{
+        //    if (stop == pass)
+        //        return vision;
+        //    pass++;
+        //    foreach (var item in myNeighbors)
+        //    {
+        //        if (!vision.Contains(item))
+        //        {
+        //            if (item is T)
+        //            {
+        //                vision.Add(item);
+        //                return vision;
+        //            }
+        //            else if (!item.IsObstacle)
+        //            {
+        //                vision.Add(item);
+        //                VisualizeRecursiveVision<T>(item.neighbors, vision, stop, pass);
+        //            }
+        //        }
+        //    }
+        //    return vision;
+        //}
+
+			//List<ICellBase> vision = new List<ICellBase>();
+            //vision = VisualizeRecursiveVision<AnimalType>(neighbors, vision, data.Vision, 0);
+
+		            //#region Visualization
+            //foreach (var item in vision)
+            //{
+            //    if (item is AnimalType)
+            //    {
+            //        _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.DarkRed);
+            //    }
+            //    else if (item == this)
+            //    {
+
+            //    }
+            //    else
+            //    {
+            //        _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.Blue);
+            //    }
+            //}
+            //System.Threading.Thread.Sleep(Globals.VisionDelay);
+            //#endregion
+
