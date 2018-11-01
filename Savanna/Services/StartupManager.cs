@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Autofac;
+﻿using Autofac;
 using Savanna.Constants;
 using Savanna.Containers;
 using Savanna.Interfaces;

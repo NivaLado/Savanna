@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Savanna.Rendering;
 using Savanna.Services;
-using Savanna.Rendering;
-using System.Threading;
-using Savanna.Constants;
 
 namespace Savanna
 {
@@ -23,6 +20,7 @@ namespace Savanna
                 );
 
             game.MainMenu();
+
             while (true)
             {
                 game.GameLoop();

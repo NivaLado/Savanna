@@ -20,7 +20,6 @@ namespace Savanna.Abstract
 
         public AnimalBase(
             int x, int y,
-            int speed, int runSpeed,
             INotificator notificator,
             ISavannaField savanna,
             IPathfinder pathfinder,
@@ -31,8 +30,8 @@ namespace Savanna.Abstract
             data = new AnimalData()
             {
                 ID = id,
-                RunSpeed = runSpeed,
-                Speed = speed,
+                RunSpeed = 10,
+                Speed = 5,
             };
 
 
@@ -51,7 +50,7 @@ namespace Savanna.Abstract
         {
             ICellBase target = null;
             List<ICellBase> vision = new List<ICellBase>();
-            vision = DrawCircle<AnimalType>(vision);
+            vision = AreaVision<AnimalType>(vision);
 
             foreach (var item in vision)
             {
@@ -67,9 +66,9 @@ namespace Savanna.Abstract
                 {
                     _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.DarkRed);
                 }
-                else if(item == this)
+                else if (item == this)
                 {
-                    
+
                 }
                 else
                 {
@@ -82,26 +81,25 @@ namespace Savanna.Abstract
             return target;
         }
 
-        public List<ICellBase> DrawCircle<AnimalType>(List<ICellBase> vision)
+        public List<ICellBase> AreaVision<AnimalType>(List<ICellBase> vision)
         {
             for (int x = 0; x < _savanna.Width; x++)
             {
                 for (int y = 0; y < _savanna.Height; y++)
                 {
-                    if (true)
+                    //var euclidean = _pathfinder.GetDistance(this, _savanna.Field[x, y]);
+                    //if (euclidean <= data.Vision)
+                    //{
+                    //    if (!_savanna.Field[x, y].IsObstacle)
+                    //        vision.Add(_savanna.Field[x, y]);
+                    //}
+
+                    //Testing
+                    var manhattan = _pathfinder.Heuristic(this, _savanna.Field[x, y]);
+                    if (manhattan <= data.Vision)
                     {
-                        var euclidean = _pathfinder.GetDistance(this, _savanna.Field[x, y]);
-                        if (euclidean <= data.Vision)
-                        {
+                        if (!_savanna.Field[x, y].IsObstacle)
                             vision.Add(_savanna.Field[x, y]);
-                        }
-                    } else //Testing
-                    {
-                        var manhattan = _pathfinder.Heuristic(this, _savanna.Field[x, y]);
-                        if (manhattan <= data.Vision)
-                        {
-                            vision.Add(_savanna.Field[x, y]);
-                        }
                     }
                 }
             }

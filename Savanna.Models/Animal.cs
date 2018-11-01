@@ -1,5 +1,5 @@
-﻿using Savanna.Interfaces;
-using System;
+﻿using System;
+using Savanna.Interfaces;
 
 namespace Savanna.Models
 {
@@ -10,7 +10,6 @@ namespace Savanna.Models
         public int Speed { get; set; }
         public int Vision { get; set; }
         public int RunSpeed { get; set; }
-        public bool IsRunning { get; set; }
         public bool IsPredator { get; set; }
     }
 }

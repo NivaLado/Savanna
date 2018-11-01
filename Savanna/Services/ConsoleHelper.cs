@@ -13,7 +13,6 @@ namespace Savanna.Services
 
             ConsoleKey key;
             IRenderer _renderer = ConsoleRenderer.GetInstance();
-
             _renderer.CursorVisible(false);
 
             do
@@ -65,6 +64,7 @@ namespace Savanna.Services
                 }
             } while (key != ConsoleKey.Enter);
 
+            InputManager.SetPauseTo(false);
             return currentSelection;
         }
     }

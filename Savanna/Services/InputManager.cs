@@ -21,6 +21,7 @@ namespace Savanna.Services
             return lazy.Value;
         }
         #endregion
+
         private static bool Pause { get; set; }
 
         public static void SetPauseTo(bool setTo)
@@ -32,7 +33,7 @@ namespace Savanna.Services
         {
             while (true)
             {
-                if(!Pause)
+                if (!Pause)
                 {
                     switch (Console.ReadKey(true).Key)
                     {
@@ -41,19 +42,14 @@ namespace Savanna.Services
                             Task.Delay(Globals.InputDelay).Wait();
                             break;
 
-                        case ConsoleKey.P:
-                            Console.WriteLine("Play");
-                            Task.Delay(Globals.InputDelay).Wait();
+                        case ConsoleKey.L:
+                            SavannaFieldManager.GetInstance().
+                                CreateAndAddAnimalToTheFieldAtRandom(1);
                             break;
 
-                        case ConsoleKey.S:
-                            //Globals.Save = !Globals.Save;
-                            Task.Delay(Globals.InputDelay).Wait();
-                            break;
-
-                        case ConsoleKey.D:
-                            //Globals.ChangeVisibleGames = true;
-                            Task.Delay(Globals.InputDelay).Wait();
+                        case ConsoleKey.A:
+                            SavannaFieldManager.GetInstance().
+                                CreateAndAddAnimalToTheFieldAtRandom(2);
                             break;
 
                         default:

@@ -4,7 +4,6 @@ using Savanna.Constants;
 using Savanna.Fauna;
 using Savanna.Interfaces;
 using Savanna.Models;
-using Savanna.Rendering;
 
 namespace Savanna.Services
 {
@@ -52,6 +51,16 @@ namespace Savanna.Services
             }
         }
 
+        private void CheckThatGridIsEmtyReturnPos(out int x, out int y)
+        {
+            Random random = new Random();
+            do
+            {
+                x = random.Next(0, Globals.Width);
+                y = random.Next(0, Globals.Height);
+            } while (savanna.Field[x, y] is AnimalBase);
+        }
+
         public void ClearSavannaAStarData()
         {
             for (int x = 0; x < savanna.Field.GetLength(0); x++)
@@ -67,33 +76,20 @@ namespace Savanna.Services
             }
         }
 
-        public void CreateAndAddAnimalToTheField(int x, int y, int speed, int runSpeed, bool isPredator)
+        public void CreateAndAddAnimalToTheFieldAtRandom(int animal)
         {
-            CellBase animal;
-            if (isPredator)
-            {
-                animal = new Predator(
-                    x, y,
-                    speed, runSpeed,
-                    new GameNotifications(),
-                    savanna,
-                    AStarPathfinding.GetInstance(),
-                    ConsoleRenderer.GetInstance()
-                    );
-            }
-            else
-            {
-                animal = new GrassEater(
-                    x, y,
-                    speed, runSpeed,
-                    new GameNotifications(),
-                    savanna,
-                    AStarPathfinding.GetInstance(),
-                    ConsoleRenderer.GetInstance()
-                    );
-            }
+            AnimalBase newAnimal = AnimalFactory.CreateAnimal(animal);
+            CheckThatGridIsEmtyReturnPos(out int x, out int y);
+            newAnimal._x = x; newAnimal._y = y;
+            savanna.Field[newAnimal._x, newAnimal._y] = newAnimal;
+            newAnimal.AddNeighbors(savanna);
+        }
 
-            savanna.Field[x, y] = animal;
+        public void CreateAndAddAnimalToTheFieldAt(int animal, int x, int y)
+        {
+            AnimalBase newAnimal = AnimalFactory.CreateAnimal(animal);
+            newAnimal._x = x; newAnimal._y = y;
+            savanna.Field[newAnimal._x, newAnimal._y] = newAnimal;
         }
 
         public void CreateAndAddObstacleToTheField(int x, int y)

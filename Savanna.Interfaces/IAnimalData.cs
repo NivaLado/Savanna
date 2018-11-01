@@ -6,7 +6,6 @@
         int Speed { get; set; }
         int RunSpeed { get; set; }
         int Vision { get; set; }
-        bool IsRunning { get; set; }
         bool IsPredator { get; set; }
     }
 }

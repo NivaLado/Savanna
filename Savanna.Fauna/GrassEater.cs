@@ -5,23 +5,21 @@ using Savanna.Interfaces;
 
 namespace Savanna.Fauna
 {
-    public class GrassEater : AnimalBase, IAnimal, IGrassEater
+    public class GrassEater : AnimalBase
     {
-        private bool run;
         private ICellBase runFrom;
+        private bool run;
 
         public GrassEater(
             int x, int y,
-            int speed, int runSpeed,
             INotificator notificator,
             ISavannaField field,
             IPathfinder pathfinder,
             IRenderer renderer)
-        : base(x, y, speed, runSpeed, notificator, field, pathfinder, renderer)
+        : base(x, y, notificator, field, pathfinder, renderer)
         {
             data.IsPredator = false;
             data.Vision = 6;
-            data.Speed = speed;
         }
 
         public override void Behave()
@@ -71,7 +69,7 @@ namespace Savanna.Fauna
 
             for (int i = 0; i < direction.Count; i++)
             {
-                var current = _pathfinder.Heuristic(direction[i], runFrom);
+                var current = _pathfinder.GetDistance(direction[i], runFrom);
                 if (current > distance)
                 {
                     distance = current;

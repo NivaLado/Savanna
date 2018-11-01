@@ -41,7 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Directions.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="MenuOption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

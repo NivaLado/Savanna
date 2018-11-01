@@ -97,8 +97,8 @@ namespace Savanna.Services
                     Console.WriteLine("No Solution!");
                     return null;
                 }
-                Thread.Sleep(50);
-                VisualizeOpenClosed();
+                //Thread.Sleep(50);
+                //VisualizeOpenClosed();
             }
         }
 

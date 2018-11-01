@@ -4,20 +4,18 @@ using Savanna.Interfaces;
 
 namespace Savanna.Fauna
 {
-    public class Predator : AnimalBase, IAnimal
+    public class Predator : AnimalBase
     {
         public Predator(
             int x, int y,
-            int speed, int runSpeed,
             INotificator notificator,
             ISavannaField field,
             IPathfinder pathfinder,
             IRenderer renderer)
-            : base(x, y, speed, runSpeed, notificator, field, pathfinder, renderer)
+            : base(x, y, notificator, field, pathfinder, renderer)
         {
             data.IsPredator = true;
             data.Vision = 10;
-            data.Speed = speed;
         }
 
         private bool chase;
@@ -59,7 +57,10 @@ namespace Savanna.Fauna
         private void MoveFromTo(int x, int y)
         {
             pathToTarget = _pathfinder.MoveFromTo(_savanna.Field[_x, _y], _savanna.Field[x, y]);
-            Chase();
+            if (pathToTarget != null)
+            {
+                Chase();
+            }
         }
 
         private void Chase()

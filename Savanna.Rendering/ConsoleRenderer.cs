@@ -176,6 +176,7 @@ namespace Savanna.Rendering
         {
             if (field[x + shiftX, y + shiftY] is Obstacle)
             {
+                ForegroundColor(ConsoleColor.Gray);
                 Console.Write("x");
             }
             else if (field[x + shiftX, y + shiftY] is Ground)
@@ -184,10 +185,12 @@ namespace Savanna.Rendering
             }
             else if (field[x + shiftX, y + shiftY] is GrassEater)
             {
+                ForegroundColor(ConsoleColor.Green);
                 Console.Write("A");
             }
-            else if (field[x + shiftX, y + shiftY] is IAnimal)
+            else if (field[x + shiftX, y + shiftY] is Predator)
             {
+                ForegroundColor(ConsoleColor.Red);
                 Console.Write("L");
             }
         }
