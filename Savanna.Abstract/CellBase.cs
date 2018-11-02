@@ -5,44 +5,51 @@ namespace Savanna.Abstract
 {
     public abstract class CellBase : ICellBase
     {
-        public int _x { get; set; }
-        public int _y { get; set; }
+        public int xPos { get; set; }
+        public int yPos { get; set; }
 
         public double sum { get; set; }
         public double distance { get; set; }
         public double heuristic { get; set; }
 
-        public bool IsObstacle { get; set; }
         public bool CanAction { get; set; }
-        public List<ICellBase> neighbors { get; set; }
+        public bool IsObstacle { get; set; }
         public ICellBase cameFrom { get; set; }
+        public List<ICellBase> neighbors { get; set; }
 
-        public CellBase(int x, int y)
+        protected ISavannaField _savanna;
+
+        public CellBase(ISavannaField savanna)
         {
-            _x = x;
-            _y = y;
+            _savanna = savanna;
+            AddNeighbors(savanna);
         }
 
+        public void SetPosition(int x, int y)
+        {
+            xPos = x;
+            yPos = y;
+        }
 
         public void AddNeighbors(ISavannaField savanna)
         {
             neighbors = new List<ICellBase>();
 
-            if (_x < savanna.Width - 1)
+            if (xPos < savanna.Width - 1)
             {
-                neighbors.Add(savanna.Field[_x + 1, _y]);
+                neighbors.Add(savanna.Field[xPos + 1, yPos]);
             }
-            if (_x > 0)
+            if (xPos > 0)
             {
-                neighbors.Add(savanna.Field[_x - 1, _y]);
+                neighbors.Add(savanna.Field[xPos - 1, yPos]);
             }
-            if (_y < savanna.Height - 1)
+            if (yPos < savanna.Height - 1)
             {
-                neighbors.Add(savanna.Field[_x, _y + 1]);
+                neighbors.Add(savanna.Field[xPos, yPos + 1]);
             }
-            if (_y > 0)
+            if (yPos > 0)
             {
-                neighbors.Add(savanna.Field[_x, _y - 1]);
+                neighbors.Add(savanna.Field[xPos, yPos - 1]);
             }
         }
 

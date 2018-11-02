@@ -12,30 +12,25 @@ namespace Savanna.Abstract
         public event EventHandler<AnimalEventArgs> AnimalMoved;
 
         protected INotificator _notificator;
-        protected ISavannaField _savanna;
         protected IPathfinder _pathfinder;
         protected IRenderer _renderer;
-        protected IAnimalData data;
+
+        public IAnimalData data;
         static int id = 0;
 
         public AnimalBase(
-            int x, int y,
-            INotificator notificator,
             ISavannaField savanna,
+            INotificator notificator,
             IPathfinder pathfinder,
-            IRenderer renderer)
-            : base(x, y)
+            IRenderer renderer) : base(savanna)
         {
-            id++;
             data = new AnimalData()
             {
-                ID = id,
+                ID = id++,
                 RunSpeed = 10,
                 Speed = 5,
             };
 
-
-            _savanna = savanna;
             _notificator = notificator;
             _pathfinder = pathfinder;
             _renderer = renderer;
@@ -64,7 +59,7 @@ namespace Savanna.Abstract
             {
                 if (item is AnimalType)
                 {
-                    _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.DarkRed);
+                    _renderer.DrawAtXyWithColor(item.xPos, item.yPos, ConsoleColor.DarkRed);
                 }
                 else if (item == this)
                 {
@@ -72,7 +67,7 @@ namespace Savanna.Abstract
                 }
                 else
                 {
-                    _renderer.DrawAtXyWithColor(item._x, item._y, ConsoleColor.Blue);
+                    _renderer.DrawAtXyWithColor(item.xPos, item.yPos, ConsoleColor.Blue);
                 }
             }
             System.Threading.Thread.Sleep(Globals.VisionDelay);
@@ -87,20 +82,20 @@ namespace Savanna.Abstract
             {
                 for (int y = 0; y < _savanna.Height; y++)
                 {
-                    //var euclidean = _pathfinder.GetDistance(this, _savanna.Field[x, y]);
-                    //if (euclidean <= data.Vision)
-                    //{
-                    //    if (!_savanna.Field[x, y].IsObstacle)
-                    //        vision.Add(_savanna.Field[x, y]);
-                    //}
-
-                    //Testing
-                    var manhattan = _pathfinder.Heuristic(this, _savanna.Field[x, y]);
-                    if (manhattan <= data.Vision)
+                    var euclidean = _pathfinder.GetDistance(this, _savanna.Field[x, y]);
+                    if (euclidean <= data.Vision)
                     {
                         if (!_savanna.Field[x, y].IsObstacle)
                             vision.Add(_savanna.Field[x, y]);
                     }
+
+                    //Testing
+                    //var manhattan = _pathfinder.Heuristic(this, _savanna.Field[x, y]);
+                    //if (manhattan <= data.Vision)
+                    //{
+                    //    if (!_savanna.Field[x, y].IsObstacle)
+                    //        vision.Add(_savanna.Field[x, y]);
+                    //}
                 }
             }
             return vision;
@@ -115,60 +110,61 @@ namespace Savanna.Abstract
             {
                 List<ICellBase> direction = PossibleDirections();
                 int index = random.Next(0, direction.Count);
-                Swap(direction[index]._x, direction[index]._y);
+                SwapAndShow(direction[index].xPos, direction[index].yPos);
                 steps++;
             }
         }
 
-        public void Swap(int x, int y)
+        public void SwapAndShow(int x, int y)
         {
             var newLocation = _savanna.Field[x, y];
             if (!newLocation.IsObstacle)
             {
                 _savanna.Field[x, y] = this;
-                _savanna.Field[_x, _y] = newLocation;
-                int tempX = _x; int tempY = _y;
+                _savanna.Field[xPos, yPos] = newLocation;
+                int tempX = xPos; int tempY = yPos;
 
-                _x = newLocation._x;
-                _y = newLocation._y;
+                xPos = newLocation.xPos;
+                yPos = newLocation.yPos;
 
-                newLocation._x = tempX;
-                newLocation._y = tempY;
-                _renderer.DrawGame(_savanna, Globals.XOffset, Globals.YOffset); //Test
+                newLocation.xPos = tempX;
+                newLocation.yPos = tempY;
                 System.Threading.Thread.Sleep(Globals.SwapDelay);
             }
+
+            Show();
         }
 
         public List<ICellBase> PossibleDirections()
         {
             List<ICellBase> direction = new List<ICellBase>();
             var field = _savanna.Field;
-            if (_x < _savanna.Width - 1)
+            if (xPos < _savanna.Width - 1)
             {
                 if (!Obstacle(1, 0))
                 {
-                    direction.Add(field[_x + 1, _y]);
+                    direction.Add(field[xPos + 1, yPos]);
                 }
             }
-            if (_x > 0)
+            if (xPos > 0)
             {
                 if (!Obstacle(-1, 0))
                 {
-                    direction.Add(field[_x - 1, _y]);
+                    direction.Add(field[xPos - 1, yPos]);
                 }
             }
-            if (_y < _savanna.Height - 1)
+            if (yPos < _savanna.Height - 1)
             {
                 if (!Obstacle(0, 1))
                 {
-                    direction.Add(field[_x, _y + 1]);
+                    direction.Add(field[xPos, yPos + 1]);
                 }
             }
-            if (_y > 0)
+            if (yPos > 0)
             {
                 if (!Obstacle(0, -1))
                 {
-                    direction.Add(field[_x, _y - 1]);
+                    direction.Add(field[xPos, yPos - 1]);
                 }
             }
             return direction;
@@ -176,7 +172,12 @@ namespace Savanna.Abstract
 
         private bool Obstacle(int x, int y)
         {
-            return _savanna.Field[_x + x, _y + y].IsObstacle;
+            return _savanna.Field[xPos + x, yPos + y].IsObstacle;
+        }
+
+        public void Show()
+        {
+            _renderer.DrawGame(_savanna, Globals.XOffset, Globals.YOffset);
         }
 
         protected virtual void OnAnimalBorned(IAnimalData data)

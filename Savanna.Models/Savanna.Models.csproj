@@ -43,7 +43,6 @@
   <ItemGroup>
     <Compile Include="Animal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SavannaField.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Savanna.Constants\Savanna.Constants.csproj">

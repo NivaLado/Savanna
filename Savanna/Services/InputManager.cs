@@ -1,39 +1,36 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Savanna.Constants;
+using Savanna.Interfaces;
 
 namespace Savanna.Services
 {
-    public class InputManager
+    public class InputManager : IInputManager
     {
-        #region Singleton
-        private static readonly Lazy<InputManager> lazy =
-                            new Lazy<InputManager>(() => new InputManager());
-        public string Name { get; private set; }
+        ISavannaFieldManager _savannaManager;
 
-        private InputManager()
+        private static bool Unpaused { get; set; }
+
+        public InputManager(ISavannaFieldManager savannaManager)
         {
-            Name = Guid.NewGuid().ToString();
+            _savannaManager = savannaManager;
         }
 
-        public static InputManager GetInstance()
+        public void Unpause()
         {
-            return lazy.Value;
-        }
-        #endregion
-
-        private static bool Pause { get; set; }
-
-        public static void SetPauseTo(bool setTo)
-        {
-            Pause = setTo;
+            Unpaused = true;
         }
 
-        private static void TrackUserUnput()
+        public void Pause()
+        {
+            Unpaused = false;
+        }
+
+        private void TrackUserUnput()
         {
             while (true)
             {
-                if (!Pause)
+                if (Unpaused)
                 {
                     switch (Console.ReadKey(true).Key)
                     {
@@ -43,12 +40,12 @@ namespace Savanna.Services
                             break;
 
                         case ConsoleKey.L:
-                            SavannaFieldManager.GetInstance().
+                            _savannaManager.
                                 CreateAndAddAnimalToTheFieldAtRandom(1);
                             break;
 
                         case ConsoleKey.A:
-                            SavannaFieldManager.GetInstance().
+                            _savannaManager.
                                 CreateAndAddAnimalToTheFieldAtRandom(2);
                             break;
 
@@ -60,7 +57,7 @@ namespace Savanna.Services
             }
         }
 
-        public static void TrackUserInputTask()
+        public void TrackUserInputTask()
         {
             Task.Factory.StartNew(() => TrackUserUnput());
         }

@@ -4,7 +4,7 @@ namespace Savanna.Fauna
 {
     public class Obstacle : Ground
     {
-        public Obstacle(int x, int y, ISavannaField savanna) : base(x, y, savanna)
+        public Obstacle(ISavannaField savanna) : base(savanna)
         {
             IsObstacle = true;
         }

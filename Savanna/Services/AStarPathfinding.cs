@@ -1,35 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Savanna.Constants;
 using Savanna.Interfaces;
-using Savanna.Rendering;
 
 namespace Savanna.Services
 {
     public class AStarPathfinding : IPathfinder
     {
-        #region Singleton
-        private static readonly Lazy<AStarPathfinding> lazy =
-                            new Lazy<AStarPathfinding>(() => new AStarPathfinding());
-        public string Name { get; private set; }
+        private IRenderer _renderer;
+        private ISavannaFieldManager _savannaManager;
 
-        private AStarPathfinding()
+        public AStarPathfinding(IRenderer renderer, ISavannaFieldManager savannaManager)
         {
-            Name = Guid.NewGuid().ToString();
+            _renderer = renderer;
+            _savannaManager = savannaManager;
         }
-
-        public static AStarPathfinding GetInstance()
-        {
-            return lazy.Value;
-        }
-        #endregion
 
         private List<ICellBase> openSet = new List<ICellBase>();
         private List<ICellBase> closedSet = new List<ICellBase>();
         private List<ICellBase> obstacleSet = new List<ICellBase>();
         private List<ICellBase> path = new List<ICellBase>();
-
-        IRenderer _renderer = ConsoleRenderer.GetInstance();
 
         public List<ICellBase> MoveFromTo(ICellBase start, ICellBase end)
         {
@@ -49,7 +40,7 @@ namespace Savanna.Services
                     }
 
                     var current = openSet[winner];
-                    if (current._x == end._x && current._y == end._y)
+                    if (current.xPos == end.xPos && current.yPos == end.yPos)
                     {
                         ICellBase temp = current;
                         path.Add(current);
@@ -59,7 +50,6 @@ namespace Savanna.Services
                             temp = temp.cameFrom;
                         }
                         VisualizePath();
-                        Thread.Sleep(500);
                         return path;
                     }
 
@@ -104,9 +94,8 @@ namespace Savanna.Services
 
         public void ClearOldData()
         {
-            var savannaManager = SavannaFieldManager.GetInstance();
-            savannaManager.ClearSavannaAStarData();
-            savannaManager.AddNeighbors();
+            _savannaManager.ClearSavannaAStarData();
+            _savannaManager.AddNeighbors();
 
             path.Clear();
             openSet.Clear();
@@ -118,11 +107,11 @@ namespace Savanna.Services
         {
             foreach (var open in openSet)
             {
-                _renderer.DrawAtXyWithColor(open._x, open._y, ConsoleColor.Green);
+                _renderer.DrawAtXyWithColor(open.xPos, open.yPos, ConsoleColor.Green);
             }
             foreach (var closed in closedSet)
             {
-                _renderer.DrawAtXyWithColor(closed._x, closed._y, ConsoleColor.Red);
+                _renderer.DrawAtXyWithColor(closed.xPos, closed.yPos, ConsoleColor.Red);
             }
         }
 
@@ -130,19 +119,21 @@ namespace Savanna.Services
         {
             foreach (var endPath in path)
             {
-                _renderer.DrawAtXyWithColor(endPath._x, endPath._y, ConsoleColor.Magenta);
+                _renderer.DrawAtXyWithColor(endPath.xPos, endPath.yPos, ConsoleColor.Magenta);
             }
-            Thread.Sleep(100);
+            Thread.Sleep(Globals.PathDelay);
         }
 
         public double Heuristic(ICellBase current, ICellBase end)
         {
-            return Math.Abs(current._x - end._x) + Math.Abs(current._y - end._y); //Manhattan Distance
+            return Math.Abs(current.xPos - end.xPos)
+                + Math.Abs(current.yPos - end.yPos);
         }
 
         public double GetDistance(ICellBase current, ICellBase end)
         {
-            return Math.Sqrt(Math.Pow((end._x - current._x), 2) + Math.Pow((end._y - current._y), 2)); //Euclidean distance
+            return Math.Sqrt(Math.Pow((end.xPos - current.xPos), 2)
+                + Math.Pow((end.yPos - current.yPos), 2));
         }
     }
 }

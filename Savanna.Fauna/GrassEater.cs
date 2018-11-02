@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Savanna.Abstract;
-using Savanna.Constants;
 using Savanna.Interfaces;
 
 namespace Savanna.Fauna
@@ -11,12 +10,11 @@ namespace Savanna.Fauna
         private bool run;
 
         public GrassEater(
-            int x, int y,
+            ISavannaField savanna,
             INotificator notificator,
-            ISavannaField field,
             IPathfinder pathfinder,
             IRenderer renderer)
-        : base(x, y, notificator, field, pathfinder, renderer)
+        : base(savanna, notificator, pathfinder, renderer)
         {
             data.IsPredator = false;
             data.Vision = 6;
@@ -28,7 +26,6 @@ namespace Savanna.Fauna
             {
                 CanAction = false;
                 _pathfinder.ClearOldData();
-
                 LookForAPredator();
                 IdleOrRun();
                 OnAnimalMoved(data);
@@ -77,13 +74,16 @@ namespace Savanna.Fauna
                     winner = direction[i];
                 }
             }
-            Swap(winner._x, winner._y);
+            if (winner != null)
+            {
+                SwapAndShow(winner.xPos, winner.yPos);
+            }
         }
 
-        public void TakeDamage()
+        public void TakeDamageAndShow()
         {
-            _savanna.Field[_x, _y] = new Ground(_x, _y, _savanna);
-            _renderer.DrawGame(_savanna, Globals.XOffset, Globals.YOffset);
+            _savanna.Field[xPos, yPos] = new Ground(_savanna);
+            Show();
         }
     }
 }

@@ -1,28 +1,30 @@
 ﻿using System;
 using Savanna.Interfaces;
-using Savanna.Rendering;
 
 namespace Savanna.Services
 {
     public class ConsoleHelper
     {
-        public static int MultipleChoice(bool canCancel, params string[] options)
+        static IRenderer _renderer;
+
+        public static int MultipleChoice(IRenderer renderer, bool canCancel, params string[] options)
         {
             const int optionsPerLine = 1;
             int currentSelection = 0;
 
             ConsoleKey key;
-            IRenderer _renderer = ConsoleRenderer.GetInstance();
+            _renderer = renderer;
             _renderer.CursorVisible(false);
 
             do
             {
+                _renderer.WriteCenteredMessage("Savanna", 0, -1);
                 for (int i = 0; i < options.Length; i++)
                 {
                     if (i == currentSelection)
                         Console.ForegroundColor = ConsoleColor.Red;
 
-                    _renderer.WriteCenteredMessage(options[i], 2, i);
+                    _renderer.WriteCenteredMessage(options[i], 0, i);
 
                     Console.ResetColor();
                 }
@@ -64,7 +66,6 @@ namespace Savanna.Services
                 }
             } while (key != ConsoleKey.Enter);
 
-            InputManager.SetPauseTo(false);
             return currentSelection;
         }
     }

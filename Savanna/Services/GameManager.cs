@@ -10,9 +10,11 @@ namespace Savanna.Services
         private IRenderer _renderer;
         private ISavannaFieldManager _savannaManager;
         private IDialog _dialog;
-        private ISavannaField _savanna;
 
-        public GameManager(IRenderer renderer, ISavannaFieldManager savanna, IDialog dialog)
+        public GameManager(
+            IRenderer renderer,
+            ISavannaFieldManager savanna,
+            IDialog dialog)
         {
             _savannaManager = savanna;
             _renderer = renderer;
@@ -26,8 +28,8 @@ namespace Savanna.Services
             {
                 case MenuOption.NewGame:
                     InitializeGameField();
-                    //StartGame();
-                    //ShowGame();
+                    StartGame();
+                    ShowGame();
                     break;
                 case MenuOption.Exit:
                     Environment.Exit(0);
@@ -48,12 +50,12 @@ namespace Savanna.Services
         private void StartGame()
         {
             _renderer.CursorVisible(false);
-            _renderer.StartTransition();
+            _renderer.Transition();
         }
 
         private void ShowGame()
         {
-            _renderer.EndTransition(_savanna);
+            _renderer.Transition(_savannaManager._savanna);
         }
 
         private void InitializeGameField()
@@ -66,25 +68,24 @@ namespace Savanna.Services
             TestGrassEatersRandomly();
             //Initialize All Neigtbors
             _savannaManager.AddNeighbors();
-            _savanna = _savannaManager.savanna;
         }
 
         private void Render()
         {
-            _renderer.DrawGame(_savanna, Globals.XOffset, Globals.YOffset);
+            _renderer.DrawGame(_savannaManager._savanna, Globals.XOffset, Globals.YOffset);
         }
 
         private void AnimalTurn<Animal>()
         {
-            int width = _savanna.Field.GetLength(0);
-            int height = _savanna.Field.GetLength(1);
+            int width = _savannaManager._savanna.Field.GetLength(0);
+            int height = _savannaManager._savanna.Field.GetLength(1);
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if (_savanna.Field[x, y] is Animal)
+                    if (_savannaManager._savanna.Field[x, y] is Animal)
                     {
-                        _savanna.Field[x, y].Behave();
+                        _savannaManager._savanna.Field[x, y].Behave();
                     }
                 }
             }
@@ -92,14 +93,14 @@ namespace Savanna.Services
 
         private void ResetAction()
         {
-            int width = _savanna.Field.GetLength(0);
-            int height = _savanna.Field.GetLength(1);
+            int width = _savannaManager._savanna.Field.GetLength(0);
+            int height = _savannaManager._savanna.Field.GetLength(1);
 
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    _savanna.Field[x, y].CanAction = true;
+                    _savannaManager._savanna.Field[x, y].CanAction = true;
                 }
             }
         }

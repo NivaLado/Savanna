@@ -2,35 +2,35 @@
 using Savanna.Constants;
 using Savanna.Containers;
 using Savanna.Interfaces;
-using Savanna.Rendering;
 
 namespace Savanna.Services
 {
     public class StartupManager
     {
-        public IContainer DialogContainer;
-        public DialogWithUser dialog;
+        public GameManager gameManager;
+        private IContainer container;
 
-        public void DrawGameBorders()
+        public void RegisterIoCContainers()
         {
-            IRenderer renderer = ConsoleRenderer.GetInstance();
-            renderer.DrawGameBorders(Globals.Width, Globals.Height);
+            container = IoCBuilder.Build();
         }
 
         public void StartTrackingKeyboard()
         {
-            InputManager.TrackUserInputTask();
-            InputManager.SetPauseTo(true);
+            var inputManager = container.Resolve<InputManager>();
+            inputManager.TrackUserInputTask();
         }
 
-        public void RegisterIoCContainers()
+        public void InitializeGame()
         {
-            DialogContainer = IoCBuilder.BuildDialogWithUser();
+            gameManager = container.Resolve<GameManager>();
         }
 
-        public void InitializeUserDialog()
+        public void DrawGameBorders()
         {
-            dialog = DialogContainer.Resolve<DialogWithUser>();
+            IRenderer renderer = container.Resolve<IRenderer>();
+            renderer.DrawGameBorders(Globals.Width, Globals.Height);
+            renderer.DrawGameBorders(Globals.Width, Globals.Height, Globals.Width + 2);
         }
     }
 }

@@ -4,9 +4,9 @@ using Savanna.Interfaces;
 
 namespace Savanna.Fauna
 {
-    public class Ground : CellBase, IGround
+    public class Ground : CellBase
     {
-        public Ground(int x, int y, ISavannaField savanna) : base(x, y)
+        public Ground(ISavannaField savanna) : base(savanna)
         {
             AddNeighbors(savanna);
         }

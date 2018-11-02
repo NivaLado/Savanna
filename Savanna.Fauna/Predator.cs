@@ -7,12 +7,11 @@ namespace Savanna.Fauna
     public class Predator : AnimalBase
     {
         public Predator(
-            int x, int y,
+            ISavannaField savanna,
             INotificator notificator,
-            ISavannaField field,
             IPathfinder pathfinder,
             IRenderer renderer)
-            : base(x, y, notificator, field, pathfinder, renderer)
+            : base(savanna, notificator, pathfinder, renderer)
         {
             data.IsPredator = true;
             data.Vision = 10;
@@ -28,10 +27,8 @@ namespace Savanna.Fauna
             {
                 CanAction = false;
                 _pathfinder.ClearOldData();
-
                 LookForAVictim();
                 IdleOrChase();
-
                 OnAnimalMoved(data);
             }
         }
@@ -46,7 +43,7 @@ namespace Savanna.Fauna
         {
             if (chase)
             {
-                MoveFromTo(target._x, target._y);
+                MoveFromTo(target.xPos, target.yPos);
             }
             else
             {
@@ -56,7 +53,7 @@ namespace Savanna.Fauna
 
         private void MoveFromTo(int x, int y)
         {
-            pathToTarget = _pathfinder.MoveFromTo(_savanna.Field[_x, _y], _savanna.Field[x, y]);
+            pathToTarget = _pathfinder.MoveFromTo(_savanna.Field[xPos, yPos], _savanna.Field[x, y]);
             if (pathToTarget != null)
             {
                 Chase();
@@ -73,12 +70,12 @@ namespace Savanna.Fauna
                 if (pathToTarget[0] is GrassEater)
                 {
                     var victim = pathToTarget[0] as GrassEater;
-                    victim.TakeDamage();
+                    victim.TakeDamageAndShow();
                     pathToTarget.Clear();
                     break;
                 }
 
-                Swap(pathToTarget[0]._x, pathToTarget[0]._y);
+                SwapAndShow(pathToTarget[0].xPos, pathToTarget[0].yPos);
                 pathToTarget.Remove(pathToTarget[0]);
             }
 

@@ -7,11 +7,13 @@ namespace Savanna.Services
     {
         private IRenderer _renderer;
         private IValidator _validator;
+        private IInputManager _inputManager;
 
-        public DialogWithUser(IRenderer renderer, IValidator validator)
+        public DialogWithUser(IRenderer renderer, IValidator validator, IInputManager inputManager)
         {
             _renderer = renderer;
             _validator = validator;
+            _inputManager = inputManager;
         }
 
         public string ValidInt()
@@ -74,9 +76,10 @@ namespace Savanna.Services
 
         public int GameMenu()
         {
-            _renderer.WriteCenteredMessage("Savanna", 2, -1);
             int selectedOption =
-                    ConsoleHelper.MultipleChoice(true, "Start Game", "Exit");
+                    ConsoleHelper.MultipleChoice(_renderer, true, "Start Game", "Exit");
+
+            _inputManager.Unpause();
             return selectedOption;
         }
     }

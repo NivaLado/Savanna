@@ -8,22 +8,6 @@ namespace Savanna.Rendering
 {
     public class ConsoleRenderer : IRenderer
     {
-        #region Singleton
-        private static readonly Lazy<ConsoleRenderer> lazy =
-                            new Lazy<ConsoleRenderer>(() => new ConsoleRenderer());
-        public string Name { get; private set; }
-
-        private ConsoleRenderer()
-        {
-            Name = Guid.NewGuid().ToString();
-        }
-
-        public static ConsoleRenderer GetInstance()
-        {
-            return lazy.Value;
-        }
-        #endregion
-
         public void WriteErrorMessage(string errorMessage)
         {
             ForegroundColor(ConsoleColor.DarkRed);
@@ -83,7 +67,8 @@ namespace Savanna.Rendering
 
         public void DrawGameBorders(int width, int height, int xOffset = 0, int yOffset = 0)
         {
-            DrawTopLine(width);
+            Console.SetCursorPosition(xOffset, 0);
+            DrawTopBorder(width);
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
@@ -93,11 +78,11 @@ namespace Savanna.Rendering
                     DrawRightBorder(x, xOffset, width);
                 }
             }
-            DrawBottomLine(width);
+            DrawBottomBorder(width);
             Console.SetCursorPosition(0, 0);
         }
 
-        public void StartTransition()
+        public void Transition(ISavannaField savanna = null)
         {
             int x = Globals.Width / 2;
             int y = Globals.Height / 2;
@@ -105,8 +90,16 @@ namespace Savanna.Rendering
             int shiftY = 0, shiftX = 0;
             int h = 0, counter = 0;
 
-            Console.SetCursorPosition(x + 1, y + 1);
-            Console.Write("*");
+            Console.SetCursorPosition(x + Globals.XOffset, y + Globals.YOffset);
+
+            if (savanna == null)
+            {
+                Console.Write("*");
+            }
+            else
+            {
+                SavannaVisualization(savanna.Field, x, y, shiftX, shiftY);
+            }
 
             for (int u = 0; u < iterations; u++)
             {
@@ -116,12 +109,18 @@ namespace Savanna.Rendering
                 }
                 for (int f = 0; f < 1 + h; f++)
                 {
-                    Conditions(u, ref shiftX, ref shiftY);
+                    TransitionConditions(u, ref shiftX, ref shiftY);
                     Console.SetCursorPosition(x + shiftX + 1, y + shiftY + 1);
-                    Console.Write("*");
-                    Thread.Sleep(1);
+                    if (savanna == null)
+                    {
+                        Console.Write("*");
+                    }
+                    else
+                    {
+                        SavannaVisualization(savanna.Field, x, y, shiftX, shiftY);
+                    }
+                    Thread.Sleep(Globals.TransitionDelay);
                 }
-
                 counter++;
                 if (counter == 2)
                 {
@@ -131,43 +130,10 @@ namespace Savanna.Rendering
             }
         }
 
-        public void EndTransition(ISavannaField savanna)
-        {
-            int x = Globals.Width / 2;
-            int y = Globals.Height / 2;
-            int shiftY = 0, shiftX = 0;
-            int iterations = Globals.Width + Globals.Height - 1;
-            int steps = 0; int counter = 0;
-
-            Console.SetCursorPosition(x + 1, y + 1);
-            SavannaVisualization(savanna.Field, x, y, shiftX, shiftY);
-
-            for (int u = 0; u < iterations; u++)
-            {
-                if (u == iterations - 1)
-                {
-                    steps--;
-                }
-                for (int f = 0; f < 1 + steps; f++)
-                {
-                    Conditions(u, ref shiftX, ref shiftY);
-                    Console.SetCursorPosition(x + shiftX + 1, y + shiftY + 1);
-                    SavannaVisualization(savanna.Field, x, y, shiftX, shiftY);
-                    Thread.Sleep(1);
-                }
-                counter++;
-                if (counter == 2)
-                {
-                    counter = 0;
-                    steps++;
-                }
-            }
-        }
-
         public void DrawAtXyWithColor(int x, int y, ConsoleColor color)
         {
             ForegroundColor(color);
-            Console.SetCursorPosition(x + 1, y + 1);
+            Console.SetCursorPosition(x + Globals.XOffset, y + Globals.YOffset);
             Console.Write("*");
             ForegroundColor(ConsoleColor.White);
         }
@@ -195,7 +161,7 @@ namespace Savanna.Rendering
             }
         }
 
-        private void Conditions(int direction, ref int shiftX, ref int shiftY)
+        private void TransitionConditions(int direction, ref int shiftX, ref int shiftY)
         {
             int directionModule = direction % 4;
             switch (directionModule)
@@ -215,7 +181,6 @@ namespace Savanna.Rendering
                 default:
                     break;
             }
-
         }
 
         private void ForegroundColor(ConsoleColor color)
@@ -223,7 +188,7 @@ namespace Savanna.Rendering
             Console.ForegroundColor = color;
         }
 
-        private void DrawTopLine(int width)
+        private void DrawTopBorder(int width)
         {
             Console.Write("╔");
 
@@ -236,7 +201,7 @@ namespace Savanna.Rendering
             Console.WriteLine("\r");
         }
 
-        private void DrawBottomLine(int width)
+        private void DrawBottomBorder(int width)
         {
             Console.Write("╚");
 

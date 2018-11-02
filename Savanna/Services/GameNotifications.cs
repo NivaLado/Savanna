@@ -4,16 +4,16 @@ namespace Savanna.Services
 {
     public class GameNotifications : INotificator
     {
-        //IRenderer _renderer;
+        IRenderer _renderer;
 
-        //public  GameNotifications(IRenderer renderer)
-        //{
-
-        //}
+        public GameNotifications(IRenderer renderer)
+        {
+            _renderer = renderer;
+        }
 
         public void OnAnimalMoved(object source, AnimalEventArgs e)
         {
-            //Console.WriteLine("Lion with id " +  e.AnimalData.ID +  " Moved. Great Job.");
+            //_renderer.WriteMessage("Lion with id " + e.AnimalData.ID + " Moved. Great Job.");
         }
 
         public void OnAnimalDied(object source, AnimalEventArgs e)

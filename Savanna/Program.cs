@@ -1,5 +1,4 @@
-﻿using Savanna.Rendering;
-using Savanna.Services;
+﻿using Savanna.Services;
 
 namespace Savanna
 {
@@ -10,15 +9,10 @@ namespace Savanna
             var startup = new StartupManager();
             startup.RegisterIoCContainers();
             startup.StartTrackingKeyboard();
-            startup.InitializeUserDialog();
+            startup.InitializeGame();
             startup.DrawGameBorders();
 
-            var game = new GameManager(
-                ConsoleRenderer.GetInstance(),
-                SavannaFieldManager.GetInstance(),
-                startup.dialog
-                );
-
+            var game = startup.gameManager;
             game.MainMenu();
 
             while (true)

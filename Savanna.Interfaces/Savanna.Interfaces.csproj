@@ -44,7 +44,7 @@
     <Compile Include="IAnimalData.cs" />
     <Compile Include="ICellBase.cs" />
     <Compile Include="IDialog.cs" />
-    <Compile Include="IGround.cs" />
+    <Compile Include="IInputManager.cs" />
     <Compile Include="INotificator.cs" />
     <Compile Include="IPathfinder.cs" />
     <Compile Include="IRenderer.cs" />
