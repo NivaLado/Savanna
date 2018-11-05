@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Savanna.Constants;
-using Savanna.Fauna;
+using Savanna.Entities;
 using Savanna.Interfaces;
 
 namespace Savanna.Rendering
@@ -138,6 +138,11 @@ namespace Savanna.Rendering
             ForegroundColor(ConsoleColor.White);
         }
 
+        public void ForegroundColor(ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+        }
+
         private void SavannaVisualization(ICellBase[,] field, int x, int y, int shiftX = 0, int shiftY = 0)
         {
             if (field[x + shiftX, y + shiftY] is Obstacle)
@@ -181,11 +186,6 @@ namespace Savanna.Rendering
                 default:
                     break;
             }
-        }
-
-        private void ForegroundColor(ConsoleColor color)
-        {
-            Console.ForegroundColor = color;
         }
 
         private void DrawTopBorder(int width)

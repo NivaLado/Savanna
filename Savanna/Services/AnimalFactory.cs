@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using Savanna.Abstract;
+using Savanna.Constants;
 using Savanna.Containers;
-using Savanna.Fauna;
+using Savanna.Entities;
 
 namespace Savanna.Services
 {
@@ -11,11 +11,11 @@ namespace Savanna.Services
 
         static public AnimalBase CreateAnimal(int input)
         {
-            if (input == 1)
+            if (input == AnimalTypes.Lion)
             {
                 return container.Resolve<Predator>();
             }
-            else if (input == 2)
+            else if (input == AnimalTypes.Antelope)
             {
                 return container.Resolve<GrassEater>();
             }

@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using Savanna.Abstract;
 using Savanna.Interfaces;
 
-namespace Savanna.Fauna
+namespace Savanna.Entities
 {
     public class Predator : AnimalBase
     {
         public Predator(
-            ISavannaField savanna,
+            ISavannaFieldManager savanna,
             INotificator notificator,
             IPathfinder pathfinder,
             IRenderer renderer)
@@ -15,6 +14,7 @@ namespace Savanna.Fauna
         {
             data.IsPredator = true;
             data.Vision = 10;
+            data.Type = "Lion";
         }
 
         private bool chase;
@@ -29,7 +29,7 @@ namespace Savanna.Fauna
                 _pathfinder.ClearOldData();
                 LookForAVictim();
                 IdleOrChase();
-                OnAnimalMoved(data);
+                //OnAnimalMoved(data);
             }
         }
 
@@ -53,7 +53,7 @@ namespace Savanna.Fauna
 
         private void MoveFromTo(int x, int y)
         {
-            pathToTarget = _pathfinder.MoveFromTo(_savanna.Field[xPos, yPos], _savanna.Field[x, y]);
+            pathToTarget = _pathfinder.MoveFromTo(_savanna.area.Field[xPos, yPos], _savanna.area.Field[x, y]);
             if (pathToTarget != null)
             {
                 Chase();
@@ -69,17 +69,28 @@ namespace Savanna.Fauna
             {
                 if (pathToTarget[0] is GrassEater)
                 {
-                    var victim = pathToTarget[0] as GrassEater;
-                    victim.TakeDamageAndShow();
+                    var victim = pathToTarget[0] as AnimalBase;
+                    EatAndShow(victim);
                     pathToTarget.Clear();
                     break;
                 }
 
-                SwapAndShow(pathToTarget[0].xPos, pathToTarget[0].yPos);
+                SwapTakeDamageAndShow(pathToTarget[0].xPos, pathToTarget[0].yPos);
                 pathToTarget.Remove(pathToTarget[0]);
             }
-
             chase = false;
+        }
+
+        private void EatAndShow(AnimalBase victim)
+        {
+            Eat(victim);
+            Show();
+        }
+
+        private void Eat(AnimalBase victim)
+        {
+            victim.TakeDamage(100f);
+            data.Health += 30;
         }
     }
 }

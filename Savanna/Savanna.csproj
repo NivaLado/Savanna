@@ -66,17 +66,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Savanna.Abstract\Savanna.Abstract.csproj">
-      <Project>{672C657F-9C6E-4CDF-93AF-87C5C8CACA78}</Project>
-      <Name>Savanna.Abstract</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Savanna.Constants\Savanna.Constants.csproj">
       <Project>{831ffdae-72b5-48dd-8085-e761be4a4d4e}</Project>
       <Name>Savanna.Constants</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Savanna.Fauna\Savanna.Fauna.csproj">
+    <ProjectReference Include="..\Savanna.Fauna\Savanna.Entities.csproj">
       <Project>{cd2c890d-024e-4a98-8d34-363f7931d3c5}</Project>
-      <Name>Savanna.Fauna</Name>
+      <Name>Savanna.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\Savanna.Interfaces\Savanna.Interfaces.csproj">
       <Project>{E3D8ADE6-D8CB-4297-B1C2-39A25EAC2317}</Project>

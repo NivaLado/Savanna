@@ -30,7 +30,9 @@ namespace Savanna.Services
         {
             IRenderer renderer = container.Resolve<IRenderer>();
             renderer.DrawGameBorders(Globals.Width, Globals.Height);
-            renderer.DrawGameBorders(Globals.Width, Globals.Height, Globals.Width + 2);
+
+            renderer.DrawGameBorders(Globals.Width, Globals.Height,
+                Globals.Width + Globals.XOffset + Globals.XOffset);
         }
     }
 }

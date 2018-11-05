@@ -1,14 +1,13 @@
 ﻿using System;
-using Savanna.Abstract;
 using Savanna.Interfaces;
 
-namespace Savanna.Fauna
+namespace Savanna.Entities
 {
     public class Ground : CellBase
     {
-        public Ground(ISavannaField savanna) : base(savanna)
+        public Ground(ISavannaFieldManager savanna) : base(savanna)
         {
-            AddNeighbors(savanna);
+            AddNeighbors(savanna.area);
         }
 
         public override void Behave()

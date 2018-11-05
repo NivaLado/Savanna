@@ -1,10 +1,10 @@
 ﻿using Savanna.Interfaces;
 
-namespace Savanna.Fauna
+namespace Savanna.Entities
 {
     public class Obstacle : Ground
     {
-        public Obstacle(ISavannaField savanna) : base(savanna)
+        public Obstacle(ISavannaFieldManager savanna) : base(savanna)
         {
             IsObstacle = true;
         }

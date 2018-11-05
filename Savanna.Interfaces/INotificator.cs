@@ -9,6 +9,9 @@ namespace Savanna.Interfaces
         void OnAnimalDied(object source, AnimalEventArgs e);
 
         void OnAnimalBorned(object source, AnimalEventArgs e);
+
+        void OnNewDay(int num);
+
     }
 
     public class AnimalEventArgs : EventArgs

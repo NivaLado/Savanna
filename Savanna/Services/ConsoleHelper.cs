@@ -18,13 +18,13 @@ namespace Savanna.Services
 
             do
             {
-                _renderer.WriteCenteredMessage("Savanna", 0, -1);
+                _renderer.WriteCenteredMessage("Savanna", 2, -1);
                 for (int i = 0; i < options.Length; i++)
                 {
                     if (i == currentSelection)
                         Console.ForegroundColor = ConsoleColor.Red;
 
-                    _renderer.WriteCenteredMessage(options[i], 0, i);
+                    _renderer.WriteCenteredMessage(options[i], 2, i);
 
                     Console.ResetColor();
                 }

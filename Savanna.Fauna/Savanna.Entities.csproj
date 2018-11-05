@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimalBase.cs" />
+    <Compile Include="CellBase.cs" />
     <Compile Include="GrassEater.cs" />
     <Compile Include="Ground.cs" />
     <Compile Include="Obstacle.cs" />
@@ -48,10 +50,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Savanna.Abstract\Savanna.Abstract.csproj">
-      <Project>{672C657F-9C6E-4CDF-93AF-87C5C8CACA78}</Project>
-      <Name>Savanna.Abstract</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Savanna.Constants\Savanna.Constants.csproj">
       <Project>{831FFDAE-72B5-48DD-8085-E761BE4A4D4E}</Project>
       <Name>Savanna.Constants</Name>

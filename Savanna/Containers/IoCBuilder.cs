@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using Savanna.Fauna;
+using Savanna.Entities;
 using Savanna.Interfaces;
 using Savanna.Rendering;
 using Savanna.Services;

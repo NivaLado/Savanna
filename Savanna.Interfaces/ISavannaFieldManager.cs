@@ -2,7 +2,7 @@
 {
     public interface ISavannaFieldManager
     {
-        ISavannaField _savanna { get; set; }
+        ISavannaField area { get; set; }
         void AddNeighbors();
         void GenerateEmptyField();
         void ClearSavannaAStarData();

@@ -41,12 +41,14 @@ namespace Savanna.Services
 
                         case ConsoleKey.L:
                             _savannaManager.
-                                CreateAndAddAnimalToTheFieldAtRandom(1);
+                                CreateAndAddAnimalToTheFieldAtRandom(AnimalTypes.Lion);
+                            Task.WaitAll();
                             break;
 
                         case ConsoleKey.A:
                             _savannaManager.
-                                CreateAndAddAnimalToTheFieldAtRandom(2);
+                                CreateAndAddAnimalToTheFieldAtRandom(AnimalTypes.Antelope);
+                            Task.WaitAll();
                             break;
 
                         default:

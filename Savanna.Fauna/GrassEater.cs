@@ -1,16 +1,17 @@
 ﻿using System.Collections.Generic;
-using Savanna.Abstract;
+using Savanna.Constants;
 using Savanna.Interfaces;
 
-namespace Savanna.Fauna
+namespace Savanna.Entities
 {
     public class GrassEater : AnimalBase
     {
         private ICellBase runFrom;
         private bool run;
+        private int breeding = 0;
 
         public GrassEater(
-            ISavannaField savanna,
+            ISavannaFieldManager savanna,
             INotificator notificator,
             IPathfinder pathfinder,
             IRenderer renderer)
@@ -18,6 +19,7 @@ namespace Savanna.Fauna
         {
             data.IsPredator = false;
             data.Vision = 6;
+            data.Type = "Antelope";
         }
 
         public override void Behave()
@@ -28,7 +30,8 @@ namespace Savanna.Fauna
                 _pathfinder.ClearOldData();
                 LookForAPredator();
                 IdleOrRun();
-                OnAnimalMoved(data);
+                BreedAndShow();
+                //OnAnimalMoved(data);
             }
         }
 
@@ -36,6 +39,34 @@ namespace Savanna.Fauna
         {
             runFrom = LookAroundFor<Predator>();
             run = (runFrom != null) ? true : false;
+        }
+
+        private void BreedAndShow()
+        {
+            var sameType = LookAroundFor<GrassEater>(true);
+            breeding = (sameType != null) ? ++breeding : 0;
+            Breed();
+            Show();
+        }
+
+        private void Breed()
+        {
+            if (breeding == 3)
+            {
+                List<ICellBase> area = new List<ICellBase>();
+                area = AreaVision<GrassEater>(area);
+                foreach (var item in area)
+                {
+                    if (item is Ground)
+                    {
+                        _savanna.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, item.xPos, item.yPos);
+                        var animal = _savanna.area.Field[item.xPos, item.yPos] as GrassEater;
+                        OnAnimalBorned(animal.data);
+                        break;
+                    }
+                }
+                breeding = 0;
+            }
         }
 
         private void IdleOrRun()
@@ -76,14 +107,8 @@ namespace Savanna.Fauna
             }
             if (winner != null)
             {
-                SwapAndShow(winner.xPos, winner.yPos);
+                SwapTakeDamageAndShow(winner.xPos, winner.yPos);
             }
-        }
-
-        public void TakeDamageAndShow()
-        {
-            _savanna.Field[xPos, yPos] = new Ground(_savanna);
-            Show();
         }
     }
 }
