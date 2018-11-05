@@ -29,6 +29,7 @@ namespace Savanna.Abstract
                 ID = id++,
                 RunSpeed = 10,
                 Speed = 5,
+                Health = 100
             };
 
             _notificator = notificator;
@@ -132,6 +133,7 @@ namespace Savanna.Abstract
                 System.Threading.Thread.Sleep(Globals.SwapDelay);
             }
 
+            TakeDamage(Globals.ExhaustDamage);
             Show();
         }
 
@@ -170,14 +172,23 @@ namespace Savanna.Abstract
             return direction;
         }
 
-        private bool Obstacle(int x, int y)
-        {
-            return _savanna.Field[xPos + x, yPos + y].IsObstacle;
-        }
-
         public void Show()
         {
             _renderer.DrawGame(_savanna, Globals.XOffset, Globals.YOffset);
+        }
+
+        protected void TakeDamage(float damage)
+        {
+            data.Health -= damage;
+            if (data.Health <= 0)
+            {
+                _savanna.Field[xPos, yPos] = new Ground(_savanna);
+            }
+        }
+
+        private bool Obstacle(int x, int y)
+        {
+            return _savanna.Field[xPos + x, yPos + y].IsObstacle;
         }
 
         protected virtual void OnAnimalBorned(IAnimalData data)

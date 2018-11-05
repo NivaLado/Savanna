@@ -12,5 +12,6 @@
         public static int VisionDelay = 100;
         public static int PathDelay = 500;
         public static int InputDelay = 1000;
+        public static float ExhaustDamage = 0.5f;
     }
 }

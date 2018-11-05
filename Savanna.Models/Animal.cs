@@ -10,6 +10,7 @@ namespace Savanna.Models
         public int Speed { get; set; }
         public int RunSpeed { get; set; }
         public int Vision { get; set; }
+        public float Health { get; set; }
         public bool IsPredator { get; set; }
     }
 }
