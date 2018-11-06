@@ -30,7 +30,7 @@ namespace Savanna.Entities
                 ID = id++,
                 RunSpeed = 10,
                 Speed = 5,
-                Health = 30
+                Health = 3
             };
 
             _notificator = notificator;
@@ -104,9 +104,12 @@ namespace Savanna.Entities
 
         public void SwapTakeDamageAndShow(int x, int y)
         {
-            Swap(x, y);
-            TakeDamage(Globals.ExhaustDamage);
-            Show();
+            if (data.Health > 0)
+            {
+                Swap(x, y);
+                TakeDamage(Globals.ExhaustDamage);
+                Show();
+            }
         }
 
         public List<ICellBase> PossibleDirections()
