@@ -64,7 +64,7 @@ namespace Savanna.Services
 
         private void ShowGame()
         {
-            _renderer.Transition(_savannaManager.area);
+            _renderer.Transition(_savannaManager.Area);
         }
 
         private void StartCountingDays()
@@ -87,20 +87,20 @@ namespace Savanna.Services
 
         private void Render()
         {
-            _renderer.DrawGame(_savannaManager.area, Globals.XOffset, Globals.YOffset);
+            _renderer.DrawGame(_savannaManager.Area, Globals.XOffset, Globals.YOffset);
         }
 
         private void AnimalTurn<Animal>()
         {
-            int width = _savannaManager.area.Width;
-            int height = _savannaManager.area.Height;
+            int width = _savannaManager.Area.Width;
+            int height = _savannaManager.Area.Height;
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if (_savannaManager.area.Field[x, y] is Animal)
+                    if (_savannaManager.Area.Field[x, y] is Animal)
                     {
-                        _savannaManager.area.Field[x, y].Behave();
+                        _savannaManager.Area.Field[x, y].Behave();
                     }
                 }
             }
@@ -108,14 +108,14 @@ namespace Savanna.Services
 
         private void ResetAction()
         {
-            int width = _savannaManager.area.Width;
-            int height = _savannaManager.area.Height;
+            int width = _savannaManager.Area.Width;
+            int height = _savannaManager.Area.Height;
 
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
-                    _savannaManager.area.Field[x, y].CanAction = true;
+                    _savannaManager.Area.Field[x, y].CanAction = true;
                 }
             }
         }

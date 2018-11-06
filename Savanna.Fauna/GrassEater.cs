@@ -60,7 +60,7 @@ namespace Savanna.Entities
                     if (item is Ground)
                     {
                         _savanna.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, item.xPos, item.yPos);
-                        var animal = _savanna.area.Field[item.xPos, item.yPos] as GrassEater;
+                        var animal = _savanna.Area.Field[item.xPos, item.yPos] as GrassEater;
                         OnAnimalBorned(animal.data);
                         break;
                     }

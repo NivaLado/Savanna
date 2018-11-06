@@ -13,6 +13,7 @@ namespace Savanna.Services
         public void RegisterIoCContainers()
         {
             container = IoCBuilder.Build();
+            AnimalFactory.SetContainer(container);
         }
 
         public void StartTrackingKeyboard()

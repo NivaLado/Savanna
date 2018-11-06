@@ -30,7 +30,7 @@ namespace Savanna.Entities
                 ID = id++,
                 RunSpeed = 10,
                 Speed = 5,
-                Health = 3
+                Health = 5
             };
 
             _notificator = notificator;
@@ -115,8 +115,8 @@ namespace Savanna.Entities
         public List<ICellBase> PossibleDirections()
         {
             List<ICellBase> direction = new List<ICellBase>();
-            var field = _savanna.area.Field;
-            if (xPos < _savanna.area.Width - 1)
+            var field = _savanna.Area.Field;
+            if (xPos < _savanna.Area.Width - 1)
             {
                 if (!Obstacle(1, 0))
                 {
@@ -130,7 +130,7 @@ namespace Savanna.Entities
                     direction.Add(field[xPos - 1, yPos]);
                 }
             }
-            if (yPos < _savanna.area.Height - 1)
+            if (yPos < _savanna.Area.Height - 1)
             {
                 if (!Obstacle(0, 1))
                 {
@@ -158,20 +158,20 @@ namespace Savanna.Entities
 
         public void Show()
         {
-            _renderer.DrawGame(_savanna.area, Globals.XOffset, Globals.YOffset);
+            _renderer.DrawGame(_savanna.Area, Globals.XOffset, Globals.YOffset);
         }
 
         public List<ICellBase> AreaVision<AnimalType>(List<ICellBase> vision)
         {
-            for (int x = 0; x < _savanna.area.Width; x++)
+            for (int x = 0; x < _savanna.Area.Width; x++)
             {
-                for (int y = 0; y < _savanna.area.Height; y++)
+                for (int y = 0; y < _savanna.Area.Height; y++)
                 {
-                    var euclidean = _pathfinder.GetDistance(this, _savanna.area.Field[x, y]);
+                    var euclidean = _pathfinder.GetDistance(this, _savanna.Area.Field[x, y]);
                     if (euclidean <= data.Vision)
                     {
-                        if (!_savanna.area.Field[x, y].IsObstacle)
-                            vision.Add(_savanna.area.Field[x, y]);
+                        if (!_savanna.Area.Field[x, y].IsObstacle)
+                            vision.Add(_savanna.Area.Field[x, y]);
                     }
                 }
             }
@@ -180,11 +180,11 @@ namespace Savanna.Entities
 
         private void Swap(int x, int y)
         {
-            var newLocation = _savanna.area.Field[x, y];
+            var newLocation = _savanna.Area.Field[x, y];
             if (!newLocation.IsObstacle)
             {
-                _savanna.area.Field[x, y] = this;
-                _savanna.area.Field[xPos, yPos] = newLocation;
+                _savanna.Area.Field[x, y] = this;
+                _savanna.Area.Field[xPos, yPos] = newLocation;
                 int tempX = xPos; int tempY = yPos;
                 xPos = newLocation.xPos;
                 yPos = newLocation.yPos;
@@ -197,12 +197,12 @@ namespace Savanna.Entities
         private void Die()
         {
             OnAnimalDied(data);
-            _savanna.area.Field[xPos, yPos] = new Ground(_savanna);
+            _savanna.Area.Field[xPos, yPos] = new Ground(_savanna);
         }
 
         private bool Obstacle(int x, int y)
         {
-            return _savanna.area.Field[xPos + x, yPos + y].IsObstacle;
+            return _savanna.Area.Field[xPos + x, yPos + y].IsObstacle;
         }
 
         protected virtual void OnAnimalBorned(IAnimalData data)

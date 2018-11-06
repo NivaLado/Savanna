@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Savanna.UnitTests
 {
-    public class PredatorTest
+    public class SavannaManagerTests
     {
         [Fact]
         public void Test()
@@ -15,35 +15,30 @@ namespace Savanna.UnitTests
             using (var mock = AutoMock.GetLoose())
             {
                 mock.Mock<ISavannaFieldManager>()
-                    .Setup(x => x.area)
+                    .Setup(x => x.Area)
                     .Returns(GetSampleField());
 
                 var testingClass = mock.Create<Predator>();
 
                 var expected = GetSampleField();
 
-                var actual = testingClass;
+                //var actual = testingClass.;
             }
             throw new NotImplementedException();
         }
 
+        /*Mocking*/
         private ISavannaFieldManager SampleFieldManager =
-            new SavannaFieldManager(SavannaField.GetInstance());
+                         SavannaFieldManager.GetInstance();
 
         private ISavannaField GetSampleField()
         {
-            ISavannaField output = SavannaField.GetInstance();
+            ISavannaField output;
 
-            output.Field = new CellBase[43, 43];
-            for (int x = 0; x < output.Field.GetLength(0); x++)
-            {
-                for (int y = 0; y < output.Field.GetLength(1); y++)
-                {
-                    var ground = new Ground(SampleFieldManager);
-                    ground.SetPosition(x, y);
-                    output.Field[x, y] = ground;
-                }
-            }
+            SampleFieldManager.GenerateEmptyField();
+
+            output = SampleFieldManager.Area;
+
             return output;
         }
     }

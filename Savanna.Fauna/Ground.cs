@@ -7,7 +7,7 @@ namespace Savanna.Entities
     {
         public Ground(ISavannaFieldManager savanna) : base(savanna)
         {
-            AddNeighbors(savanna.area);
+            AddNeighbors(savanna.Area);
         }
 
         public override void Behave()

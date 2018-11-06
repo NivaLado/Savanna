@@ -1,7 +1,7 @@
 ﻿using Savanna.Constants;
 using Savanna.Interfaces;
 
-namespace Savanna.Services
+namespace Savanna.Models
 {
     public class SavannaField : ISavannaField
     {

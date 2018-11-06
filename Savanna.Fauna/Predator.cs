@@ -53,7 +53,7 @@ namespace Savanna.Entities
 
         private void MoveFromTo(int x, int y)
         {
-            pathToTarget = _pathfinder.MoveFromTo(_savanna.area.Field[xPos, yPos], _savanna.area.Field[x, y]);
+            pathToTarget = _pathfinder.MoveFromTo(_savanna.Area.Field[xPos, yPos], _savanna.Area.Field[x, y]);
             if (pathToTarget != null)
             {
                 Chase();

@@ -1,23 +1,27 @@
 ﻿using Autofac;
 using Savanna.Constants;
-using Savanna.Containers;
 using Savanna.Entities;
 
 namespace Savanna.Services
 {
     public class AnimalFactory
     {
-        static IContainer container = IoCBuilder.Build();
+        private static IContainer _container;
+
+        static public void SetContainer(IContainer container)
+        {
+            _container = container;
+        }
 
         static public AnimalBase CreateAnimal(int input)
         {
             if (input == AnimalTypes.Lion)
             {
-                return container.Resolve<Predator>();
+                return _container.Resolve<Predator>();
             }
             else if (input == AnimalTypes.Antelope)
             {
-                return container.Resolve<GrassEater>();
+                return _container.Resolve<GrassEater>();
             }
             else
             {

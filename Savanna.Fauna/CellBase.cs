@@ -22,7 +22,7 @@ namespace Savanna.Entities
         public CellBase(ISavannaFieldManager savanna)
         {
             _savanna = savanna;
-            AddNeighbors(_savanna.area);
+            AddNeighbors(_savanna.Area);
         }
 
         public void SetPosition(int x, int y)
