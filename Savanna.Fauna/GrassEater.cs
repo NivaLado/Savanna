@@ -4,7 +4,7 @@ using Savanna.Interfaces;
 
 namespace Savanna.Entities
 {
-    public class GrassEater : AnimalBase
+    public class GrassEater : AnimalBase, IAnimal
     {
         private ICellBase runFrom;
         private bool run;
@@ -17,9 +17,13 @@ namespace Savanna.Entities
             IRenderer renderer)
         : base(savanna, notificator, pathfinder, renderer)
         {
-            data.IsPredator = false;
+            data.Speed = 5;
+            data.RunSpeed = 10;
+            data.Health = 10;
             data.Vision = 6;
+            data.DisplayLetter = "A";
             data.Type = "Antelope";
+            data.color = System.ConsoleColor.Green;
         }
 
         public override void Behave()
@@ -46,14 +50,14 @@ namespace Savanna.Entities
             if (!IsAlive())
                 return;
             var sameType = LookAroundFor<GrassEater>(true);
-            breeding = (sameType != null) ? ++breeding : 0;
+            breeding = (sameType != null && sameType != this) ? ++breeding : 0;
             Breed();
             Show();
         }
 
         private void Breed()
         {
-            if (breeding == 3)
+            if (breeding == 2)
             {
                 List<ICellBase> area = new List<ICellBase>();
                 area = AreaVision<GrassEater>(area);

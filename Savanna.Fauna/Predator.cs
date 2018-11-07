@@ -3,7 +3,7 @@ using Savanna.Interfaces;
 
 namespace Savanna.Entities
 {
-    public class Predator : AnimalBase
+    public class Predator : AnimalBase, IAnimal
     {
         public Predator(
             ISavannaFieldManager savanna,
@@ -12,9 +12,13 @@ namespace Savanna.Entities
             IRenderer renderer)
             : base(savanna, notificator, pathfinder, renderer)
         {
-            data.IsPredator = true;
+            data.Speed = 5;
+            data.RunSpeed = 10;
+            data.Health = 10;
             data.Vision = 10;
+            data.DisplayLetter = "L";
             data.Type = "Lion";
+            data.color = System.ConsoleColor.Red;
         }
 
         private bool chase;

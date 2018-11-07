@@ -154,15 +154,11 @@ namespace Savanna.Rendering
             {
                 Console.Write(" ");
             }
-            else if (field[x + shiftX, y + shiftY] is GrassEater)
+            else if (field[x + shiftX, y + shiftY] is AnimalBase)
             {
-                ForegroundColor(ConsoleColor.Green);
-                Console.Write("A");
-            }
-            else if (field[x + shiftX, y + shiftY] is Predator)
-            {
-                ForegroundColor(ConsoleColor.Red);
-                Console.Write("L");
+                var animal = field[x + shiftX, y + shiftY];
+                ForegroundColor(animal.data.color);
+                Console.Write(animal.data.DisplayLetter);
             }
         }
 

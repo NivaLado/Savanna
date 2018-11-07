@@ -16,6 +16,6 @@ namespace Savanna.Interfaces
 
     public class AnimalEventArgs : EventArgs
     {
-        public IAnimalData AnimalData { get; set; }
+        public IEntityData AnimalData { get; set; }
     }
 }

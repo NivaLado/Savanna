@@ -13,7 +13,7 @@ namespace Savanna.Interfaces
 
         bool CanAction { get; set; }
         bool IsObstacle { get; set; }
-
+        IEntityData data { get; set; }
         ICellBase cameFrom { get; set; }
         List<ICellBase> neighbors { get; set; }
 

@@ -7,6 +7,8 @@ namespace Savanna.Entities
         public Obstacle(ISavannaFieldManager savanna) : base(savanna)
         {
             IsObstacle = true;
+            data.DisplayLetter = "x";
+            data.color = System.ConsoleColor.White;
         }
     }
 }

@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAnimal.cs" />
     <Compile Include="IAnimalData.cs" />
+    <Compile Include="IAssemblyReader.cs" />
     <Compile Include="ICellBase.cs" />
     <Compile Include="IDialog.cs" />
     <Compile Include="IInputManager.cs" />

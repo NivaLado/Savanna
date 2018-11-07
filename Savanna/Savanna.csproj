@@ -52,6 +52,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AnimalFactory.cs" />
+    <Compile Include="Services\AssemblyReader.cs" />
     <Compile Include="Services\AStarPathfinding.cs" />
     <Compile Include="Services\ConsoleHelper.cs" />
     <Compile Include="Services\DialogWithUser.cs" />

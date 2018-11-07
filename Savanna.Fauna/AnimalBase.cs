@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Savanna.Constants;
 using Savanna.Interfaces;
-using Savanna.Models;
 
 namespace Savanna.Entities
 {
@@ -16,7 +15,6 @@ namespace Savanna.Entities
         protected IPathfinder _pathfinder;
         protected IRenderer _renderer;
 
-        public IAnimalData data;
         static int id = 0;
 
         public AnimalBase(
@@ -25,17 +23,12 @@ namespace Savanna.Entities
             IPathfinder pathfinder,
             IRenderer renderer) : base(savanna)
         {
-            data = new AnimalData()
-            {
-                ID = id++,
-                RunSpeed = 10,
-                Speed = 5,
-                Health = 5
-            };
-
             _notificator = notificator;
             _pathfinder = pathfinder;
             _renderer = renderer;
+
+            id++;
+            data.ID = id;
 
             AnimalMoved += _notificator.OnAnimalMoved;
             AnimalBorned += _notificator.OnAnimalBorned;
@@ -203,6 +196,7 @@ namespace Savanna.Entities
         {
             OnAnimalDied(data);
             _savanna.Area.Field[xPos, yPos] = new Ground(_savanna);
+            _savanna.Area.Field[xPos, yPos].SetPosition(xPos, yPos);
         }
 
         private bool Obstacle(int x, int y)
@@ -210,17 +204,17 @@ namespace Savanna.Entities
             return _savanna.Area.Field[xPos + x, yPos + y].IsObstacle;
         }
 
-        protected virtual void OnAnimalBorned(IAnimalData data)
+        protected virtual void OnAnimalBorned(IEntityData data)
         {
             AnimalBorned?.Invoke(this, new AnimalEventArgs() { AnimalData = data });
         }
 
-        protected virtual void OnAnimalMoved(IAnimalData data)
+        protected virtual void OnAnimalMoved(IEntityData data)
         {
             AnimalMoved?.Invoke(this, new AnimalEventArgs() { AnimalData = data });
         }
 
-        protected virtual void OnAnimalDied(IAnimalData data)
+        protected virtual void OnAnimalDied(IEntityData data)
         {
             AnimalDied?.Invoke(this, new AnimalEventArgs() { AnimalData = data });
         }

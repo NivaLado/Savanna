@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Savanna.Interfaces;
+using Savanna.Models;
 
 namespace Savanna.Entities
 {
@@ -16,12 +17,13 @@ namespace Savanna.Entities
         public bool IsObstacle { get; set; }
         public ICellBase cameFrom { get; set; }
         public List<ICellBase> neighbors { get; set; }
-
+        public IEntityData data { get; set; }
         protected ISavannaFieldManager _savanna;
 
         public CellBase(ISavannaFieldManager savanna)
         {
             _savanna = savanna;
+            data = new EntityData();
             AddNeighbors(_savanna.Area);
         }
 

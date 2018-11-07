@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AF436B1B-B756-46BB-9F1B-51E67F2BF5C5}</ProjectGuid>
+    <ProjectGuid>{290BD499-477D-4161-AE43-5170E71B5FE1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Savanna.Models</RootNamespace>
-    <AssemblyName>Savanna.Models</AssemblyName>
+    <RootNamespace>Elephant</RootNamespace>
+    <AssemblyName>Elephant</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,16 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityData.cs" />
+    <Compile Include="Elephant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Savanna.Constants\Savanna.Constants.csproj">
-      <Project>{831FFDAE-72B5-48DD-8085-E761BE4A4D4E}</Project>
-      <Name>Savanna.Constants</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Savanna.Interfaces\Savanna.Interfaces.csproj">
-      <Project>{E3D8ADE6-D8CB-4297-B1C2-39A25EAC2317}</Project>
+      <Project>{e3d8ade6-d8cb-4297-b1c2-39a25eac2317}</Project>
       <Name>Savanna.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
