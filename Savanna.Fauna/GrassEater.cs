@@ -43,6 +43,8 @@ namespace Savanna.Entities
 
         private void BreedAndShow()
         {
+            if (!IsAlive())
+                return;
             var sameType = LookAroundFor<GrassEater>(true);
             breeding = (sameType != null) ? ++breeding : 0;
             Breed();

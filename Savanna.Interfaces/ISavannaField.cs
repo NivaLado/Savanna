@@ -2,8 +2,8 @@
 {
     public interface ISavannaField
     {
-        int Width { get; }
-        int Height { get; }
+        int Width { get; set; }
+        int Height { get; set; }
         ICellBase[,] Field { get; set; }
     }
 }

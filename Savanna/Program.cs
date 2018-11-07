@@ -6,19 +6,19 @@ namespace Savanna
     {
         private static void Main(string[] args)
         {
-            var startup = new StartupManager();
-            startup.RegisterIoCContainers();
-            startup.StartTrackingKeyboard();
-            startup.InitializeGame();
-            startup.DrawGameBorders();
+            //var startup = new StartupManager();
+            //startup.RegisterIoCContainers();
+            //startup.StartTrackingKeyboard();
+            //startup.InitializeGame();
+            //startup.DrawGameBorders();
 
-            var game = startup.gameManager;
-            game.MainMenu();
+            //var game = startup.gameManager;
+            //game.MainMenu();
 
-            while (true)
-            {
-                game.GameLoop();
-            }
+            //while (true)
+            //{
+            //    game.GameLoop();
+            //}
         }
     }
 }

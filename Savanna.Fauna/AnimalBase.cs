@@ -194,6 +194,11 @@ namespace Savanna.Entities
             }
         }
 
+        protected bool IsAlive()
+        {
+            return data.Health > 0;
+        }
+
         private void Die()
         {
             OnAnimalDied(data);
