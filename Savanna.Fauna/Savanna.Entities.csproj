@@ -45,6 +45,23 @@
     <Compile Include="CellBase.cs" />
     <Compile Include="GrassEater.cs" />
     <Compile Include="Ground.cs" />
+    <Compile Include="Interfaces\IAnimal.cs" />
+    <Compile Include="Interfaces\IAnimalBase.cs" />
+    <Compile Include="Interfaces\IAnimalFactory.cs" />
+    <Compile Include="Interfaces\IAssemblyReader.cs" />
+    <Compile Include="Interfaces\ICellBase.cs" />
+    <Compile Include="Interfaces\IDialog.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
+    <Compile Include="Interfaces\IEntityData.cs" />
+    <Compile Include="Interfaces\IInputManager.cs" />
+    <Compile Include="Interfaces\INotificator.cs" />
+    <Compile Include="Interfaces\IPathfinder.cs" />
+    <Compile Include="Interfaces\IRenderer.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISavannaField.cs" />
+    <Compile Include="Interfaces\ISavannaFieldManager.cs" />
+    <Compile Include="Interfaces\IValidator.cs" />
+    <Compile Include="Models\EntityData.cs" />
     <Compile Include="Obstacle.cs" />
     <Compile Include="Predator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -54,14 +71,7 @@
       <Project>{831FFDAE-72B5-48DD-8085-E761BE4A4D4E}</Project>
       <Name>Savanna.Constants</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Savanna.Interfaces\Savanna.Interfaces.csproj">
-      <Project>{E3D8ADE6-D8CB-4297-B1C2-39A25EAC2317}</Project>
-      <Name>Savanna.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Savanna.Models\Savanna.Models.csproj">
-      <Project>{AF436B1B-B756-46BB-9F1B-51E67F2BF5C5}</Project>
-      <Name>Savanna.Models</Name>
-    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

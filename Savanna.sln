@@ -11,10 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Savanna.Constants", "Savann
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Savanna.Rendering", "Savanna.Rendering\Savanna.Rendering.csproj", "{1A1E9CFE-AEAF-44EE-A07D-18A6EFDF7399}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Savanna.Interfaces", "Savanna.Interfaces\Savanna.Interfaces.csproj", "{E3D8ADE6-D8CB-4297-B1C2-39A25EAC2317}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Savanna.Models", "Savanna.Models\Savanna.Models.csproj", "{AF436B1B-B756-46BB-9F1B-51E67F2BF5C5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Savanna.UnitTests", "Savanna.UnitTests\Savanna.UnitTests.csproj", "{B9E6D558-52B0-4F66-8EC4-4D3822B56DBE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Elephant", "Elephant\Elephant.csproj", "{290BD499-477D-4161-AE43-5170E71B5FE1}"
@@ -45,14 +41,6 @@ Global
 		{1A1E9CFE-AEAF-44EE-A07D-18A6EFDF7399}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A1E9CFE-AEAF-44EE-A07D-18A6EFDF7399}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A1E9CFE-AEAF-44EE-A07D-18A6EFDF7399}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E3D8ADE6-D8CB-4297-B1C2-39A25EAC2317}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E3D8ADE6-D8CB-4297-B1C2-39A25EAC2317}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E3D8ADE6-D8CB-4297-B1C2-39A25EAC2317}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E3D8ADE6-D8CB-4297-B1C2-39A25EAC2317}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AF436B1B-B756-46BB-9F1B-51E67F2BF5C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AF436B1B-B756-46BB-9F1B-51E67F2BF5C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AF436B1B-B756-46BB-9F1B-51E67F2BF5C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AF436B1B-B756-46BB-9F1B-51E67F2BF5C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B9E6D558-52B0-4F66-8EC4-4D3822B56DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B9E6D558-52B0-4F66-8EC4-4D3822B56DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9E6D558-52B0-4F66-8EC4-4D3822B56DBE}.Release|Any CPU.ActiveCfg = Release|Any CPU

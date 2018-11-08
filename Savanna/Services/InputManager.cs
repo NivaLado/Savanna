@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Savanna.Constants;
-using Savanna.Interfaces;
+using Savanna.Entities;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Services
 {
@@ -36,23 +36,26 @@ namespace Savanna.Services
                     {
                         case ConsoleKey.Escape:
                             Environment.Exit(0);
-                            Task.Delay(Globals.InputDelay).Wait();
                             break;
 
                         case ConsoleKey.L:
                             _savannaManager.
-                                CreateAndAddAnimalToTheFieldAtRandom(AnimalTypes.Lion);
-                            Task.WaitAll();
+                                AddAnimalToTheFieldAtRandom<Predator>("Lion");
                             break;
 
                         case ConsoleKey.A:
                             _savannaManager.
-                                CreateAndAddAnimalToTheFieldAtRandom(AnimalTypes.Antelope);
+                                AddAnimalToTheFieldAtRandom<GrassEater>("Antelope");
+                            Task.WaitAll();
+                            break;
+
+                        case ConsoleKey.E:
+                            _savannaManager.
+                                AddAnimalToTheFieldAtRandom<GrassEater>("Elephant");
                             Task.WaitAll();
                             break;
 
                         default:
-                            Task.Delay(Globals.InputDelay).Wait();
                             break;
                     }
                 }

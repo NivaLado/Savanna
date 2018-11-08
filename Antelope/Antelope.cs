@@ -1,4 +1,5 @@
 ﻿using System;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Interfaces
 {

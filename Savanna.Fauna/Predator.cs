@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Entities
 {
@@ -11,15 +11,7 @@ namespace Savanna.Entities
             IPathfinder pathfinder,
             IRenderer renderer)
             : base(savanna, notificator, pathfinder, renderer)
-        {
-            data.Speed = 5;
-            data.RunSpeed = 10;
-            data.Health = 10;
-            data.Vision = 10;
-            data.DisplayLetter = "L";
-            data.Type = "Lion";
-            data.color = System.ConsoleColor.Red;
-        }
+        { }
 
         private bool chase;
         private ICellBase target;
@@ -33,7 +25,6 @@ namespace Savanna.Entities
                 _pathfinder.ClearOldData();
                 LookForAVictim();
                 IdleOrChase();
-                //OnAnimalMoved(data);
             }
         }
 
@@ -47,10 +38,12 @@ namespace Savanna.Entities
         {
             if (chase)
             {
+                OnAnimalStartRunning(data);
                 MoveFromTo(target.xPos, target.yPos);
             }
             else
             {
+                OnAnimalStartMoving(data);
                 Idle();
             }
         }

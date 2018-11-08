@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Services
 {

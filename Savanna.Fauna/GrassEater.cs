@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Savanna.Constants;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Entities
 {
@@ -16,15 +15,7 @@ namespace Savanna.Entities
             IPathfinder pathfinder,
             IRenderer renderer)
         : base(savanna, notificator, pathfinder, renderer)
-        {
-            data.Speed = 5;
-            data.RunSpeed = 10;
-            data.Health = 10;
-            data.Vision = 6;
-            data.DisplayLetter = "A";
-            data.Type = "Antelope";
-            data.color = System.ConsoleColor.Green;
-        }
+        { }
 
         public override void Behave()
         {
@@ -35,7 +26,6 @@ namespace Savanna.Entities
                 LookForAPredator();
                 IdleOrRun();
                 BreedAndShow();
-                //OnAnimalMoved(data);
             }
         }
 
@@ -65,7 +55,7 @@ namespace Savanna.Entities
                 {
                     if (item is Ground)
                     {
-                        _savanna.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, item.xPos, item.yPos);
+                        _savanna.AddAnimalToTheFieldAt<GrassEater>(data.Type, item.xPos, item.yPos);
                         var animal = _savanna.Area.Field[item.xPos, item.yPos] as GrassEater;
                         OnAnimalBorned(animal.data);
                         break;
@@ -79,10 +69,12 @@ namespace Savanna.Entities
         {
             if (run)
             {
+                OnAnimalStartRunning(data);
                 RunFrom();
             }
             else
             {
+                OnAnimalStartMoving(data);
                 Idle();
             }
         }

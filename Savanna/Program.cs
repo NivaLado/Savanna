@@ -6,9 +6,6 @@ namespace Savanna
     {
         private static void Main(string[] args)
         {
-            //var reader = new AssemblyReader();
-            //reader.Test();
-
             var startup = new StartupManager();
             startup.RegisterIoCContainers();
             startup.StartTrackingKeyboard();

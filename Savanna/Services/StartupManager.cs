@@ -1,14 +1,14 @@
 ﻿using Autofac;
 using Savanna.Constants;
 using Savanna.Containers;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Services
 {
     public class StartupManager
     {
         public GameManager gameManager;
-        private IContainer container;
+        public IContainer container;
 
         public void RegisterIoCContainers()
         {

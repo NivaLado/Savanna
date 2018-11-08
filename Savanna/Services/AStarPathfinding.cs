@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using Savanna.Constants;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Services
 {

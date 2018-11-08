@@ -1,6 +1,6 @@
 ﻿using System;
 using Savanna.Constants;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Services
 {
@@ -14,24 +14,33 @@ namespace Savanna.Services
             _renderer = renderer;
         }
 
-        public void OnAnimalMoved(object source, AnimalEventArgs e)
+        public void OnAnimalStartMoving(object source, AnimalEventArgs e)
         {
-            //_renderer.WriteMessage("Lion with id " + e.AnimalData.ID + " Moved. Great Job.");
+            _renderer.WriteCenteredMessage(
+                    e.AnimalData.Type + e.AnimalData.ID + " start moving with "
+                    + e.AnimalData.Health + " Health.", 46, rows);
+            rows++;
+        }
+
+        public void OnAnimalStartRunning(object source, AnimalEventArgs e)
+        {
+            _renderer.WriteCenteredMessage(
+                    e.AnimalData.Type + e.AnimalData.ID + " start running with "
+                    + e.AnimalData.Health + " Health.", 46, rows);
+            rows++;
         }
 
         public void OnAnimalDied(object source, AnimalEventArgs e)
         {
             _renderer.WriteCenteredMessage(
-                    e.AnimalData.Type + " with id "
-                    + e.AnimalData.ID + " has died.", 46, rows);
+                    e.AnimalData.Type + e.AnimalData.ID + " has died.", 46, rows);
             rows++;
         }
 
         public void OnAnimalBorned(object source, AnimalEventArgs e)
         {
             _renderer.WriteCenteredMessage(
-                e.AnimalData.Type + " with id "
-                + e.AnimalData.ID + " was borned.", 46, rows);
+                e.AnimalData.Type + e.AnimalData.ID + " was borned.", 46, rows);
             rows++;
         }
 

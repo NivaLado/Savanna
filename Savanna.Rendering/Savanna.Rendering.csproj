@@ -53,14 +53,6 @@
       <Project>{CD2C890D-024E-4A98-8D34-363F7931D3C5}</Project>
       <Name>Savanna.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Savanna.Interfaces\Savanna.Interfaces.csproj">
-      <Project>{E3D8ADE6-D8CB-4297-B1C2-39A25EAC2317}</Project>
-      <Name>Savanna.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Savanna.Models\Savanna.Models.csproj">
-      <Project>{AF436B1B-B756-46BB-9F1B-51E67F2BF5C5}</Project>
-      <Name>Savanna.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

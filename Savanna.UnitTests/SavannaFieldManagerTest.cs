@@ -1,6 +1,6 @@
 ﻿using Autofac.Extras.Moq;
 using Savanna.Constants;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 using Savanna.Services;
 using Xunit;
 

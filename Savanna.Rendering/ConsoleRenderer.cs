@@ -2,7 +2,7 @@
 using System.Threading;
 using Savanna.Constants;
 using Savanna.Entities;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Rendering
 {

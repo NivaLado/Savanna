@@ -52,6 +52,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AnimalFactory.cs" />
+    <Compile Include="Services\AnimalsRepository.cs" />
     <Compile Include="Services\AssemblyReader.cs" />
     <Compile Include="Services\AStarPathfinding.cs" />
     <Compile Include="Services\ConsoleHelper.cs" />
@@ -76,14 +77,6 @@
     <ProjectReference Include="..\Savanna.Fauna\Savanna.Entities.csproj">
       <Project>{cd2c890d-024e-4a98-8d34-363f7931d3c5}</Project>
       <Name>Savanna.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Savanna.Interfaces\Savanna.Interfaces.csproj">
-      <Project>{E3D8ADE6-D8CB-4297-B1C2-39A25EAC2317}</Project>
-      <Name>Savanna.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Savanna.Models\Savanna.Models.csproj">
-      <Project>{AF436B1B-B756-46BB-9F1B-51E67F2BF5C5}</Project>
-      <Name>Savanna.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\Savanna.Rendering\Savanna.Rendering.csproj">
       <Project>{1A1E9CFE-AEAF-44EE-A07D-18A6EFDF7399}</Project>

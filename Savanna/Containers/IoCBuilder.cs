@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Savanna.Entities;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 using Savanna.Rendering;
 using Savanna.Services;
 
@@ -22,9 +22,12 @@ namespace Savanna.Containers
             builder.RegisterType<AStarPathfinding>().As<IPathfinder>().SingleInstance();
             builder.RegisterType<GameNotifications>().As<INotificator>().SingleInstance();
 
+            builder.RegisterType<AnimalsRepository>().As<IRepository<AnimalBase>>();
             builder.RegisterType<Validator>().As<IValidator>();
             builder.RegisterType<DialogWithUser>().As<IDialog>();
             builder.RegisterType<InputManager>().As<IInputManager>();
+            builder.RegisterType<AnimalFactory>().As<IAnimalFactory>();
+            builder.RegisterType<AssemblyReader>().As<IAssemblyReader>();
             builder.RegisterType<SavannaFieldManager>().As<ISavannaFieldManager>();
 
             return builder.Build();

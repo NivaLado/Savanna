@@ -42,7 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IAnimal.cs" />
-    <Compile Include="IAnimalData.cs" />
+    <Compile Include="IAnimalBase.cs" />
+    <Compile Include="IAnimalFactory.cs" />
+    <Compile Include="IEntity.cs" />
+    <Compile Include="IEntityData.cs" />
     <Compile Include="IAssemblyReader.cs" />
     <Compile Include="ICellBase.cs" />
     <Compile Include="IDialog.cs" />
@@ -50,6 +53,7 @@
     <Compile Include="INotificator.cs" />
     <Compile Include="IPathfinder.cs" />
     <Compile Include="IRenderer.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="ISavannaField.cs" />
     <Compile Include="ISavannaFieldManager.cs" />
     <Compile Include="IValidator.cs" />

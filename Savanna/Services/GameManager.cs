@@ -1,7 +1,7 @@
 ﻿using System;
 using Savanna.Constants;
 using Savanna.Entities;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Services
 {
@@ -126,47 +126,19 @@ namespace Savanna.Services
         }
 
         /*Testing Methods*/
-        private void TestPredators()
-        {
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Lion, 5, 40);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Lion, 10, 35);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Lion, 15, 30);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Lion, 20, 25);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Lion, 25, 20);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Lion, 30, 15);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Lion, 35, 10);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Lion, 40, 5);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Lion, 6, 6);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Lion, 18, 18);
-        }
-
         private void TestPredatorsRandomly()
         {
             for (int i = 0; i < 10; i++)
             {
-                _savannaManager.CreateAndAddAnimalToTheFieldAtRandom(AnimalTypes.Lion);
+                _savannaManager.AddAnimalToTheFieldAtRandom<Predator>("Lion");
             }
-        }
-
-        private void TestGrassEaters()
-        {
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, 38, 4);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, 32, 8);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, 26, 12);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, 16, 16);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, 12, 22);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, 8, 26);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, 6, 32);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, 4, 38);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, 2, 0);
-            _savannaManager.CreateAndAddAnimalToTheFieldAt(AnimalTypes.Antelope, 0, 0);
         }
 
         private void TestGrassEatersRandomly()
         {
             for (int i = 0; i < 10; i++)
             {
-                _savannaManager.CreateAndAddAnimalToTheFieldAtRandom(AnimalTypes.Antelope);
+                _savannaManager.AddAnimalToTheFieldAtRandom<GrassEater>("Antelope");
             }
         }
 

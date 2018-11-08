@@ -1,17 +1,20 @@
 ﻿using System;
 using Savanna.Constants;
 using Savanna.Entities;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Services
 {
     public class SavannaFieldManager : ISavannaFieldManager
     {
         public ISavannaField Area { get; set; }
+        private IRepository<AnimalBase> _repository;
 
-        public SavannaFieldManager(ISavannaField area)
+
+        public SavannaFieldManager(ISavannaField area, IRepository<AnimalBase> repository)
         {
             Area = area;
+            _repository = repository;
         }
 
         public void GenerateEmptyField()
@@ -54,17 +57,17 @@ namespace Savanna.Services
             }
         }
 
-        public void CreateAndAddAnimalToTheFieldAtRandom(int animal)
+        public void AddAnimalToTheFieldAtRandom<T>(string animal)
         {
-            var newAnimal = AnimalFactory.CreateAnimal(animal);
+            AnimalBase newAnimal = _repository.GetAnimal<T>(animal);
             CheckThatGridIsEmtyReturnPos(out int x, out int y);
             newAnimal.SetPosition(x, y);
             Area.Field[newAnimal.xPos, newAnimal.yPos] = newAnimal;
         }
 
-        public void CreateAndAddAnimalToTheFieldAt(int animal, int x, int y)
+        public void AddAnimalToTheFieldAt<T>(string animal, int x, int y)
         {
-            var newAnimal = AnimalFactory.CreateAnimal(animal);
+            AnimalBase newAnimal = _repository.GetAnimal<T>(animal);
             newAnimal.SetPosition(x, y);
             Area.Field[newAnimal.xPos, newAnimal.yPos] = newAnimal;
         }

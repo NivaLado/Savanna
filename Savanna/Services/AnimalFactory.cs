@@ -1,38 +1,36 @@
-﻿using Autofac;
-using Savanna.Constants;
+﻿using System;
+using Autofac;
 using Savanna.Entities;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Services
 {
-    public class AnimalFactory
+    public class AnimalFactory : IAnimalFactory
     {
-        private static AssemblyReader reader;
-        private static IContainer _container;
-        //CLEAN HERE - Make repository , get rid of static//
-        static public void SetContainer(IContainer container)
+        static IContainer _container;
+
+        public static void SetContainer(IContainer container)
         {
             _container = container;
-            reader = new AssemblyReader();
         }
 
-        static public AnimalBase CreateAnimal(int input)
+        public AnimalBase CreateAnimal<T>()
         {
-            if (input == AnimalTypes.Lion)
+            Type listType = typeof(T);
+
+            if (listType == typeof(Predator))
             {
-                var animal = _container.Resolve<Predator>();
-                animal.data = reader.PullAnimal("Lion");
-                return animal;
+                return _container.Resolve<Predator>();
             }
-            else if (input == AnimalTypes.Antelope)
+            else if (listType == typeof(GrassEater))
             {
-                var animal = _container.Resolve<GrassEater>();
-                animal.data = reader.PullAnimal("Antelope");
-                return animal;
+                return _container.Resolve<GrassEater>();
             }
             else
             {
                 return null;
             }
         }
+
     }
 }

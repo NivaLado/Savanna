@@ -1,6 +1,7 @@
 ﻿using System;
+using Savanna.Entities.Interfaces;
 
-namespace Savanna.Models
+namespace Savanna.Entities.Models
 {
     [Serializable]
     public class EntityData : IEntityData

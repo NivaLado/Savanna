@@ -1,6 +1,6 @@
 ﻿using Autofac.Extras.Moq;
 using Savanna.Entities;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 using Savanna.Services;
 using Xunit;
 
@@ -15,7 +15,7 @@ namespace Savanna.UnitTests
             {
                 ICellBase expected = null;
                 var area = new SavannaField();
-                var dependency = new SavannaFieldManager(area);
+                var dependency = new SavannaFieldManager(area, null);
                 var pathDep = new AStarPathfinding(null, dependency);
 
                 var field = mock.Provide<ISavannaFieldManager>(dependency);
@@ -35,7 +35,7 @@ namespace Savanna.UnitTests
             using (var mock = AutoMock.GetLoose())
             {
                 var area = new SavannaField();
-                var dependency = new SavannaFieldManager(area);
+                var dependency = new SavannaFieldManager(area, null);
                 var pathDep = new AStarPathfinding(null, dependency);
                 mock.Provide<IPathfinder>(pathDep);
                 var field = mock.Provide<ISavannaFieldManager>(dependency);

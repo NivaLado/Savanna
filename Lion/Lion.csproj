@@ -45,9 +45,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Savanna.Interfaces\Savanna.Interfaces.csproj">
-      <Project>{e3d8ade6-d8cb-4297-b1c2-39a25eac2317}</Project>
-      <Name>Savanna.Interfaces</Name>
+    <ProjectReference Include="..\Savanna.Fauna\Savanna.Entities.csproj">
+      <Project>{CD2C890D-024E-4A98-8D34-363F7931D3C5}</Project>
+      <Name>Savanna.Entities</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

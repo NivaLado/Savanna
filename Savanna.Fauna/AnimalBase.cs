@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using Savanna.Constants;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Entities
 {
     public abstract class AnimalBase : CellBase
     {
         public event EventHandler<AnimalEventArgs> AnimalBorned;
-        public event EventHandler<AnimalEventArgs> AnimalMoved;
+        public event EventHandler<AnimalEventArgs> AnimalMoving;
+        public event EventHandler<AnimalEventArgs> AnimalRunning;
         public event EventHandler<AnimalEventArgs> AnimalDied;
 
         protected INotificator _notificator;
         protected IPathfinder _pathfinder;
         protected IRenderer _renderer;
-
-        static int id = 0;
 
         public AnimalBase(
             ISavannaFieldManager savanna,
@@ -27,10 +26,8 @@ namespace Savanna.Entities
             _pathfinder = pathfinder;
             _renderer = renderer;
 
-            id++;
-            data.ID = id;
-
-            AnimalMoved += _notificator.OnAnimalMoved;
+            AnimalMoving += _notificator.OnAnimalStartMoving;
+            AnimalRunning += _notificator.OnAnimalStartRunning;
             AnimalBorned += _notificator.OnAnimalBorned;
             AnimalDied += _notificator.OnAnimalDied;
         }
@@ -209,9 +206,14 @@ namespace Savanna.Entities
             AnimalBorned?.Invoke(this, new AnimalEventArgs() { AnimalData = data });
         }
 
-        protected virtual void OnAnimalMoved(IEntityData data)
+        protected virtual void OnAnimalStartMoving(IEntityData data)
         {
-            AnimalMoved?.Invoke(this, new AnimalEventArgs() { AnimalData = data });
+            AnimalMoving?.Invoke(this, new AnimalEventArgs() { AnimalData = data });
+        }
+
+        protected virtual void OnAnimalStartRunning(IEntityData data)
+        {
+            AnimalRunning?.Invoke(this, new AnimalEventArgs() { AnimalData = data });
         }
 
         protected virtual void OnAnimalDied(IEntityData data)

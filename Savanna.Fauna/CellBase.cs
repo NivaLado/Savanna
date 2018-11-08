@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Savanna.Interfaces;
-using Savanna.Models;
+using Savanna.Entities.Interfaces;
+using Savanna.Entities.Models;
 
 namespace Savanna.Entities
 {

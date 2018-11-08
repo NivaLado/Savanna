@@ -1,5 +1,5 @@
 ﻿using Savanna.Constants;
-using Savanna.Interfaces;
+using Savanna.Entities.Interfaces;
 
 namespace Savanna.Services
 {
